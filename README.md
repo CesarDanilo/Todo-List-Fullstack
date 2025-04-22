@@ -28,3 +28,24 @@ Aplicação de lista de tarefas (todo list) com autenticação, controle de hist
 - 🔐 **bcrypt** para hash de senhas  
 
 ---
+
+## 🔐 Autenticação JWT
+
+- Geração de token no login  
+- Middleware para proteger rotas privadas  
+- Decodificação do token com ID do usuário  
+- Armazenamento seguro no frontend  
+
+---
+
+## 📦 Endpoints da API
+
+| Método | Rota           | Descrição                         |
+|--------|----------------|-----------------------------------|
+| POST   | `/auth/register` | Criação de conta                  |
+| POST   | `/auth/login`    | Login de usuário                  |
+| GET    | `/tarefas`       | Listar tarefas                    |
+| POST   | `/tarefas`       | Criar tarefa                      |
+| PUT    | `/tarefas/:id`   | Atualizar tarefa                  |
+| DELETE | `/tarefas/:id`   | Excluir tarefa e salvar histórico |
+| GET    | `/historico`     | Ver tarefas excluídas
