@@ -26,17 +26,6 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(255),
             allowNull: false
         },
-        cpf: {
-            type: DataTypes.STRING(255),
-            allowNull: false
-        },
-        role: {
-            type: DataTypes.STRING(50),
-            allowNull: false,
-            validate: {
-                isIn: [['paciente', 'médico', 'admin']]
-            }
-        },
         createdAt: {
             type: DataTypes.DATE
         },
