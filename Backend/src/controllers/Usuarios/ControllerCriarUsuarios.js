@@ -6,7 +6,7 @@ const ControllerCriarUsuario = async (req, res) => {
         const data = req.body;
 
         // Validando informações recebidas
-        if (!data.name || !data.email || !data.password || !data.status) {
+        if (!data.name || !data.email || !data.password) {
             return res.status(400).json({
                 msg: "Não foi possivel gravar! Todos os campos são obrigatorios!",
                 data: req.body
@@ -30,6 +30,7 @@ const ControllerCriarUsuario = async (req, res) => {
             msg: "GRAVADO COM SÚCESSO",
             data: result.dataValues
         });
+
     } catch (error) {
         return res.status(400).send(`Não foi possível fazer a operação: ${error}`);
     }
