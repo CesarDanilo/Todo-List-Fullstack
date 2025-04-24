@@ -26,8 +26,12 @@ const ControllerCriarUsuario = async (req, res) => {
             })
         }
 
+        return res.status(200).json({
+            msg: "GRAVADO COM SÚCESSO",
+            data: result.dataValues
+        });
     } catch (error) {
-
+        return res.status(400).send(`Não foi possível fazer a operação: ${error}`);
     }
 }
 
