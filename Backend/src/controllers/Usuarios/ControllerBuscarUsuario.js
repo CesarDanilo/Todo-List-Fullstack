@@ -4,4 +4,4 @@ const ControllerBuscarUsuarios = async (req, res, next) => {
     })
 }
 
-export default ControllerBuscarUsuarios;
+module.exports = ControllerBuscarUsuarios;
