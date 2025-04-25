@@ -3,37 +3,38 @@ const { v4: uuidv4 } = require('uuid');
 
 const ControllerCriarUsuario = async (req, res) => {
     try {
-        const data = req.body;
+        const { username, email, password } = req.body;
 
-        // Validando informações recebidas
-        if (!data.name || !data.email || !data.password) {
+        if (!username || !email || !password) {
             return res.status(400).json({
-                msg: "Não foi possivel gravar! Todos os campos são obrigatorios!",
+                msg: "Todos os campos são obrigatórios!",
                 data: req.body
-            })
+            });
         }
 
-        const userId = uuidv4();
-        data.id = userId;
-
-        let result;
-        try {
-            result = await Usuarios.create(data);
-        } catch (error) {
-            return res.status(400).json({
-                msg: "Não foi possível gravar!",
-                erro: error.message
-            })
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ msg: "Email inválido!" });
         }
 
-        return res.status(200).json({
-            msg: "GRAVADO COM SÚCESSO",
+        const newUser = {
+            id: uuidv4(),
+            username,
+            email,
+            password
+        };
+
+        const result = await Usuarios.create(newUser);
+
+        return res.status(201).json({
+            msg: "Gravado com sucesso!",
             data: result.dataValues
         });
 
     } catch (error) {
-        return res.status(400).send(`Não foi possível fazer a operação: ${error}`);
+        console.error("Erro ao criar usuário:", error);
+        return res.status(500).json({ msg: "Erro interno no servidor." });
     }
-}
+};
 
 module.exports = ControllerCriarUsuario;
