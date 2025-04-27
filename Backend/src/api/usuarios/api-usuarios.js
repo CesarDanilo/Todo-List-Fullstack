@@ -2,7 +2,9 @@ const express = require('express');
 const routes = express.Router();
 const userController = require('../../controllers/Usuarios');
 
-routes.post('/create-user', userController.criarUsuario);
+const createUserBcrypt = require('../../middleware/createUserBcrypt');
+
+routes.post('/create-user', createUserBcrypt , userController.criarUsuario);
 routes.get('/', userController.buscarUsuario)
 
 module.exports = routes;
