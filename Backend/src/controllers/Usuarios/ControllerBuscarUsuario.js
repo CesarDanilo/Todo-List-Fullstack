@@ -1,18 +1,25 @@
 const { Usuarios } = require('../../database/models');
+const { Op } = require('sequelize');
 
 const ControllerBuscarUsuarios = async (req, res, next) => {
 
-    const { id } = req.query;
+    const { id, email } = req.query;
 
     try {
-        let whare = {};
+        let where = {};
 
         if (id) {
-            whare.id = id;
+            where.id = id;
+        }
+
+        if (email) {
+            where.email = {
+                [Op.iLike]: `%${email}%`
+            };
         }
 
         const result = await Usuarios.findAll({
-            whare,
+            where,
             attributes: ['id', 'username', 'email', 'createdAt', 'updatedAt']
         })
 
