@@ -1,28 +1,47 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class tarefas extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+const { Model, DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
+  class Tarefas extends Model {
     static associate(models) {
-      // define association here
+      // Users.hasMany(models.Pedido, { foreignKey: 'usuario_id' });
     }
   }
-  tarefas.init({
-    id: DataTypes.STRING,
-    user_id: DataTypes.STRING,
-    title: DataTypes.STRING,
-    task_description: DataTypes.STRING,
-    task_status: DataTypes.BOOLEAN,
-    data: DataTypes.DATE
+  Tarefas.init({
+    id: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    user_id: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    title: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    task_description: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    task_status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    createdAt: {
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
-    modelName: 'tarefas',
+    modelName: 'Tarefas',
+    tableName: 'tarefas',
+    timestamps: true // Habilita o gerenciamento automático de createdAt e updatedAt
   });
-  return tarefas;
+
+  return Tarefas;
 };
