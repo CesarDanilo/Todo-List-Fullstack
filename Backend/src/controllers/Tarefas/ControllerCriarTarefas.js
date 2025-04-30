@@ -3,11 +3,11 @@ const { v4: uuidv4 } = require('uuid');
 
 const ControllerCriarTarefa = async (req, res) => {
     try {
-        const { user_id, task_title, task_description, task_status, task_data } = req.body;
+        const { user_id, title, task_description, task_status, data } = req.body;
 
-        if (!user_id || !task_title || !task_description || !task_status || !task_data) {
+        if (!user_id || !title || !task_description || !task_status || !data) {
             return res.status(400).json({
-                msg: "Todos os campos são obrigatórios!",
+                msg: `Todos os campos são obrigatórios! ${user_id, title, task_description, task_status, data}`,
                 data: req.body
             });
         }
@@ -15,10 +15,10 @@ const ControllerCriarTarefa = async (req, res) => {
         const newTask = {
             id: uuidv4(),
             user_id,
-            task_title,
+            title,
             task_description,
             task_status,
-            task_data
+            data
         };
 
         const result = await Tarefas.create(newTask);
