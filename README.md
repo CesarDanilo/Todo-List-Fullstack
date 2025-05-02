@@ -1,58 +1,86 @@
-# 📝 Todo List - Projeto Fullstack
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/86db09fc-3010-4e50-84db-51bf0e5514ea" alt="Todo List Logo" width="120" />
+</p>
 
-Aplicação de lista de tarefas (todo list) com autenticação, controle de histórico e design minimalista. Backend estruturado com padrão MVC e frontend moderno e responsivo.
+<p align="center">
+  Aplicação de lista de tarefas com autenticação via JWT, histórico de exclusão e interface moderna. <br />
+  Desenvolvida com <strong>Node.js + React.js</strong>, seguindo o padrão <strong>MVC</strong> no backend e com <strong>design responsivo</strong> no frontend.
+</p>
 
----
-![todoImg](https://github.com/user-attachments/assets/cb9b3f5f-e3c8-40ca-b799-f2f71b0fbf76)
-*** Design ainda não definitivo ***
-
-## Paleta de cores
-
-![Untitled](https://github.com/user-attachments/assets/01ac0d2a-c7dc-4808-ae83-e717159fbdb8)
-
-
-## 🚀 Tecnologias Utilizadas
-
-### ⚙️ Backend (Node.js)  
-- ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white) **Node.js**  
-- ![Express](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white) **Express.js**  
-- 🔐 **JWT** para autenticação  
-- 🔄 **Sequelize ORM**  
-- 🧾 **Padrão MVC + API RESTful**  
-- ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white) **PostgreSQL**  
-- ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white) **Docker & Docker Compose**
-
-### 💻 Frontend (React)  
-- ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) **React.js**  
-- ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white) **Tailwind CSS**  
-- ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat&logo=react-router&logoColor=white) **React Router Dom**  
-
-### 🗃️ Banco de Dados  
-- ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)  
-
-### 🧰 Outras Ferramentas  
-- ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)  
-- 🔐 **bcrypt** para hash de senhas  
 
 ---
 
-## 🔐 Autenticação JWT
+## ✨ Funcionalidades
 
-- Geração de token no login  
-- Middleware para proteger rotas privadas  
-- Decodificação do token com ID do usuário  
+- Autenticação com JWT  
+- CRUD completo de tarefas  
+- Histórico de tarefas excluídas  
+- Contagem por status (pendentes, concluídas, lixeira)  
+- Design minimalista e responsivo  
+
+---
+
+## 📸 Interface (em desenvolvimento)
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cb9b3f5f-e3c8-40ca-b799-f2f71b0fbf76" alt="Preview da Interface" width="600"/>
+</p>
+
+<p align="center"><em>*Design ainda não definitivo*</em></p>
+
+---
+
+## 🎨 Paleta de Cores
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/01ac0d2a-c7dc-4808-ae83-e717159fbdb8" alt="Paleta de Cores" width="600"/>
+</p>
+
+---
+
+## ⚙️ Tecnologias
+
+### 🔧 Backend (Node.js + Express)
+- Node.js  
+- Express.js  
+- JWT (autenticação)  
+- Sequelize ORM  
+- PostgreSQL  
+- Docker & Docker Compose  
+- Padrão MVC + API RESTful  
+
+### 💻 Frontend (React)
+- React.js  
+- Tailwind CSS  
+- React Router DOM  
+
+### 🧰 Utilitários
+- bcrypt (hash de senhas)  
+- Dotenv  
+- Cors  
+
+---
+
+## 🔐 Autenticação
+
+- Geração e verificação de token JWT  
+- Middleware para rotas protegidas  
+- Decodificação para identificar o usuário  
 - Armazenamento seguro no frontend  
 
 ---
 
-## 📦 Endpoints da API
+## 📦 Endpoints REST
 
-| Método | Rota           | Descrição                         |
-|--------|----------------|-----------------------------------|
-| POST   | `/auth/register` | Criação de conta                  |
-| POST   | `/auth/login`    | Login de usuário                  |
-| GET    | `/tarefas`       | Listar tarefas                    |
-| POST   | `/tarefas`       | Criar tarefa                      |
-| PUT    | `/tarefas/:id`   | Atualizar tarefa                  |
-| DELETE | `/tarefas/:id`   | Excluir tarefa e salvar histórico |
-| GET    | `/historico`     | Ver tarefas excluídas
+| Método | Rota             | Ação                          |
+|--------|------------------|-------------------------------|
+| POST   | `/auth/register` | Registrar novo usuário        |
+| POST   | `/auth/login`    | Autenticar usuário            |
+| GET    | `/tarefas`       | Listar tarefas                |
+| POST   | `/tarefas`       | Criar nova tarefa             |
+| PUT    | `/tarefas/:id`   | Atualizar uma tarefa          |
+| DELETE | `/tarefas/:id`   | Mover tarefa para o histórico |
+| GET    | `/historico`     | Listar tarefas excluídas      |
+
+---
+
