@@ -3,6 +3,13 @@
 Aplicação de lista de tarefas (todo list) com autenticação, controle de histórico e design minimalista. Backend estruturado com padrão MVC e frontend moderno e responsivo.
 
 ---
+![todoImg](https://github.com/user-attachments/assets/cb9b3f5f-e3c8-40ca-b799-f2f71b0fbf76)
+*** Design ainda não definitivo ***
+
+## Paleta de cores
+
+![Untitled](https://github.com/user-attachments/assets/01ac0d2a-c7dc-4808-ae83-e717159fbdb8)
+
 
 ## 🚀 Tecnologias Utilizadas
 
