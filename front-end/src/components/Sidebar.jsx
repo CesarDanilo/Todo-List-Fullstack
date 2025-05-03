@@ -1,6 +1,14 @@
+import { useState } from 'react';
 import logo from '../img/logo/t.png';
 
 export default function Sidebar({ onSelect }) {
+    const [activeItem, setActiveItem] = useState('ALL TASKS');
+
+    const handleItemClick = (item) => {
+        setActiveItem(item);
+        onSelect(item);
+    };
+
     return (
         <div className="w-[350px] text-white p-10" style={{ backgroundColor: '#f1f1eb' }}>
             {/* Logo */}
@@ -11,34 +19,28 @@ export default function Sidebar({ onSelect }) {
             {/* Menu de navegação */}
             <div className="mb-12">
                 <ul className="space-y-4">
-                    <li
-                        className="flex justify-between items-center cursor-pointer text-gray-950 font-bold font-sans text-lg hover:bg-[#E4E4E4] p-2"
-                        onClick={() => onSelect('ALL TASKS')}
-                    >
-                        <span>ALL TASKS</span>
-                        <span className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm">60</span>
-                    </li>
-                    <li
-                        className="flex justify-between items-center cursor-pointer text-gray-950 font-bold font-sans text-lg hover:bg-[#E4E4E4] p-2"
-                        onClick={() => onSelect('PENDING')}
-                    >
-                        <span>PENDING</span>
-                        <span className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm">40</span>
-                    </li>
-                    <li
-                        className="flex justify-between items-center cursor-pointer text-gray-950 font-bold font-sans text-lg hover:bg-[#E4E4E4] p-2"
-                        onClick={() => onSelect('COMPLETED')}
-                    >
-                        <span>COMPLETED</span>
-                        <span className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm">20</span>
-                    </li>
-                    <li
-                        className="flex justify-between items-center cursor-pointer text-gray-950 font-bold font-sans text-lg hover:bg-[#E4E4E4] p-2"
-                        onClick={() => onSelect('TRASH')}
-                    >
-                        <span>TRASH</span>
-                        <span className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm">12</span>
-                    </li>
+                    {['ALL TASKS', 'PENDING', 'COMPLETED', 'TRASH'].map((item) => {
+                        const count = {
+                            'ALL TASKS': 60,
+                            'PENDING': 40,
+                            'COMPLETED': 20,
+                            'TRASH': 12
+                        }[item];
+
+                        return (
+                            <li
+                                key={item}
+                                className={`flex justify-between items-center cursor-pointer text-gray-950 font-bold font-sans text-lg hover:bg-[#E4E4E4] p-2 rounded ${activeItem === item ? 'border-l-4 border-black bg-[#E4E4E4]' : ''
+                                    }`}
+                                onClick={() => handleItemClick(item)}
+                            >
+                                <span>{item}</span>
+                                <span className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm">
+                                    {count}
+                                </span>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
 
