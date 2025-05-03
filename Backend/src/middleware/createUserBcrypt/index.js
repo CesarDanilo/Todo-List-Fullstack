@@ -1,5 +1,5 @@
 const { Usuarios } = require("../../database/models")
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const createUserBcrypt = async (req, res, next) => {
 
