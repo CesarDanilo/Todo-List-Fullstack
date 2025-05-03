@@ -1,13 +1,31 @@
+# Usa uma imagem oficial do Node.js
+FROM node:18-alpine
 
-FROM node:16  
-WORKDIR /usr/src/app  
+# Cria e define o diretório de trabalho
+WORKDIR /app
 
-COPY package*.json ./  
+# 1. Copia APENAS os arquivos de dependências primeiro (para melhor cache)
+COPY package*.json ./
 
-RUN npm install  
+# Instala todas as dependências incluindo as de desenvolvimento
+RUN npm install && \
+    npm install --save \
+    sequelize \
+    sequelize-cli \
+    pg \
+    pg-hstore \
+    dotenv
 
-COPY . .  
+# 2. Copia o resto da aplicação (excluindo node_modules)
+COPY . .
 
+# Garante que o arquivo .env seja copiado (se existir)
+COPY .env ./
+
+# Expõe a porta da aplicação
 EXPOSE 3001
 
-CMD ["npm", "run", "dev"]  
+# Comando de inicialização melhorado
+CMD sh -c "npx sequelize db:create --config src/database/config/config.js 2>/dev/null || true && \
+           npx sequelize db:migrate --config src/database/config/config.js --migrations-path src/database/migrations && \
+           npm run dev"

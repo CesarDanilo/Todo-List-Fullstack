@@ -1,27 +1,25 @@
+version: "3.8"
+
 services:
   db:
-    image: postgres:13 # Usa a imagem do PostgreSQL versão 13
+    image: postgres:13
     environment:
-      POSTGRES_USER: postgres # Define o usuário do banco de dados
-      POSTGRES_PASSWORD: root # Define a senha do banco de dados
-      POSTGRES_DB: tododatabase # Define o nome do banco de dados
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: tododatabase
     ports:
-      - "5432:5432" # Expõe a porta 5432 do contêiner para o host
+      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data # Persiste os dados do PostgreSQL em um volume
+      - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: ./Backend # Constrói a imagem do backend a partir do Dockerfile na pasta ./back
+    build: ./Backend
     ports:
-      - "3001:3001" # Expõe a porta 3000 do contêiner para o host
+      - "3001:3001"
     depends_on:
-      - db # Garante que o contêiner do banco de dados seja iniciado antes do backend
-    environment:
-      DB_HOST: db # Define o host do banco de dados (usando o nome do serviço)
-      DB_USER: postgres # Define o usuário do banco de dados
-      DB_PASSWORD: root # Define a senha do banco de dados
-      DB_NAME: tododatabase # Define o nome do banco de dados
-      DB_PORT: 5432 # Define a porta do banco de dados
+      - db
+    env_file:
+      - ./Backend/.env
 
 volumes:
-  postgres_data: # Define um volume para persistir os dados do PostgreSQL
+  postgres_data:
