@@ -21,7 +21,7 @@ export default function MainContent({ selected }) {
     };
 
     return (
-        <div className="flex-1 p-6 overflow-auto" style={{ backgroundColor: '#f1f1eb' }}>
+        <div className="flex-1 p-11 overflow-auto justify-center align-middle" style={{ backgroundColor: '#f1f1eb' }}>
             {renderContent()}
         </div>
     );
