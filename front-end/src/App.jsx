@@ -1,10 +1,15 @@
-import './App.css';
-import { React } from 'react'
-import AllTasks from './pages/AllTasks';
+import { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import MainContent from './components/MainContent';
 
 function App() {
+  const [selectedItem, setSelectedItem] = useState('Item 1');
+
   return (
-    <AllTasks />
+    <div className="flex h-screen">
+      <Sidebar onSelect={setSelectedItem} />
+      <MainContent selected={selectedItem} />
+    </div>
   );
 }
 
