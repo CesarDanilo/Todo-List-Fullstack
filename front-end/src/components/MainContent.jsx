@@ -1,8 +1,28 @@
+import AllTasks from "../pages/allTasks";
+import PendingTasks from "../pages/PendingTasks.jsx"; // Importe os outros componentes que você precisar
+// import CompletedTasks from "../pages/completedTasks";
+// import Trash from "../pages/trash";
+
 export default function MainContent({ selected }) {
+    // Função para renderizar o componente correto baseado na seleção
+    const renderContent = () => {
+        switch (selected) {
+            case 'ALL TASKS':
+                return <AllTasks />;
+            case 'PENDING':
+                return <PendingTasks />;
+            // case 'COMPLETED':
+            //     return <CompletedTasks />;
+            // case 'TRASH':
+            //     return <Trash />;
+            default:
+                return <AllTasks />; // Padrão para quando não houver seleção
+        }
+    };
+
     return (
-        <div className="flex-1 p-6 bg-gray-100 overflow-auto" style={{ backgroundColor: '#f1f1eb' }}>
-            <h1 className="text-2xl font-semibold mb-4">Conteúdo Principal</h1>
-            <p className="text-lg">Você selecionou: <strong>{selected}</strong></p>
+        <div className="flex-1 p-6 overflow-auto" style={{ backgroundColor: '#f1f1eb' }}>
+            {renderContent()}
         </div>
     );
 }
