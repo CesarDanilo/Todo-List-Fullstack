@@ -30,7 +30,7 @@ export default function Sidebar({ onSelect }) {
                         return (
                             <li
                                 key={item}
-                                className={`flex justify-between items-center cursor-pointer text-gray-950 font-bold font-sans text-lg hover:bg-[#E4E4E4] p-2 rounded ${activeItem === item ? 'border-l-4 border-black bg-[#E4E4E4]' : ''
+                                className={`flex justify-between items-center cursor-pointer text-gray-950  font-sans text-lg hover:bg-[#E4E4E4] p-2 rounded ${activeItem === item ? 'border-l-4 border-black bg-[#E4E4E4]' : ''
                                     }`}
                                 onClick={() => handleItemClick(item)}
                             >
