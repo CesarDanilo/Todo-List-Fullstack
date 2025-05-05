@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
+import ActionsButtons from '../components/ActionsButtons';
 
 export default function AllTasks() {
   const [tarefas, setTarefas] = useState([]);
@@ -67,9 +68,9 @@ export default function AllTasks() {
               <td className="px-6 py-4 text-sm text-gray-600">
                 {tarefa.data ? new Date(tarefa.data).toLocaleDateString() : 'Sem data'}
               </td>
-              <td className="px-6 py-4 text-sm text-gray-600">
-                <button className="mr-2 text-blue-500 hover:text-blue-700">Editar</button>
-                <button className="text-red-500 hover:text-red-700">Excluir</button>
+              <td className="flex px-6 py-4 text-sm gap-1 text-gray-600">
+                <ActionsButtons type={'Edit'}/>
+                <ActionsButtons type={'Delete'}/>
               </td>
             </tr>
           ))}
