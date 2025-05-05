@@ -1,4 +1,15 @@
+import { useState } from 'react';
+
+const registerTasks = require('../functions/registerTask')
 export default function DialogForm({ setIsOpen }) {
+    const [title, setTitle] = useState();
+    const [description, setDescription] = useState();
+    const [date, setDate] = useState();
+    const [active, setActive] = useState();
+    
+    const handleDone = async () => {
+        registerTasks();
+    }
     return (
         <div className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-lg">
