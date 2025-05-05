@@ -64,7 +64,7 @@ export default function AllTasks() {
             <tr key={tarefa.id || Math.random()} className="hover:bg-[#f9f9f5] transition-colors duration-150">
               <td className="px-6 py-4 text-sm font-medium text-gray-900">{tarefa.title || 'Sem título'}</td>
               <td className="px-6 py-4 text-sm text-gray-600">{tarefa.task_description || 'Sem descrição'}</td>
-              <td className={`px-6 py-4 text-sm text-gray-600 ${tarefa.task_status ? "text-green-500" : "text-red-700"}`}>{tarefa.task_status ? 'ativo' : 'desativado' || 'Sem status'}</td>
+              <td className={`px-6 py-4 text-sm text-gray-600 ${tarefa.task_status ? "text-green-500" : "text-red-700"}`}>{tarefa.task_status ? 'active' : 'disabled' || 'Sem status'}</td>
               <td className="px-6 py-4 text-sm text-gray-600">
                 {tarefa.data ? new Date(tarefa.data).toLocaleDateString() : 'Sem data'}
               </td>
