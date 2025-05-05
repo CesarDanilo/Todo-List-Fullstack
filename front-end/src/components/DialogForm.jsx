@@ -1,6 +1,6 @@
 export default function DialogForm({ setIsOpen }) {
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0  bg-opacity-20 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-lg">
                 <h2 className="text-xl font-semibold mb-4">Título do Modal</h2>
                 <p className="mb-4">Conteúdo do modal aqui.</p>
