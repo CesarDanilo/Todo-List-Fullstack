@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
+import ActionsButtons from '../components/ActionsButtons';
 
 export default function AllTasks() {
   const [tarefas, setTarefas] = useState([]);
@@ -63,13 +64,13 @@ export default function AllTasks() {
             <tr key={tarefa.id || Math.random()} className="hover:bg-[#f9f9f5] transition-colors duration-150">
               <td className="px-6 py-4 text-sm font-medium text-gray-900">{tarefa.title || 'Sem título'}</td>
               <td className="px-6 py-4 text-sm text-gray-600">{tarefa.task_description || 'Sem descrição'}</td>
-              <td className="px-6 py-4 text-sm text-gray-600">{tarefa.task_status ? 'ativo' : 'desativado' || 'Sem status'}</td>
+              <td className={`px-6 py-4 text-sm text-gray-600 ${tarefa.task_status ? "text-green-500" : "text-red-700"}`}>{tarefa.task_status ? 'ativo' : 'desativado' || 'Sem status'}</td>
               <td className="px-6 py-4 text-sm text-gray-600">
                 {tarefa.data ? new Date(tarefa.data).toLocaleDateString() : 'Sem data'}
               </td>
-              <td className="px-6 py-4 text-sm text-gray-600">
-                <button className="mr-2 text-blue-500 hover:text-blue-700">Editar</button>
-                <button className="text-red-500 hover:text-red-700">Excluir</button>
+              <td className="flex px-6 py-4 text-sm gap-1 text-gray-600">
+                <ActionsButtons type={'Edit'} />
+                <ActionsButtons type={'Delete'} />
               </td>
             </tr>
           ))}
