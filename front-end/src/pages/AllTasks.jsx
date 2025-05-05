@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Header from '../components/Header';
 
 export default function AllTasks() {
   const [tarefas, setTarefas] = useState([]);
@@ -44,6 +45,7 @@ export default function AllTasks() {
 
   return (
     <div className="p-4">
+      <Header title={'ALL TASKS'} />
       <table className="min-w-full rounded-lg overflow-hidden shadow-sm">
         {/* Cabeçalho da tabela (mantido igual) */}
         <thead>
