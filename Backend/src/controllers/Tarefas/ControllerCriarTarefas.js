@@ -5,7 +5,7 @@ const ControllerCriarTarefa = async (req, res) => {
     try {
         const { user_id, title, task_description, task_status, data } = req.body;
 
-        if (!user_id || !title || !task_description || !task_status || !data) {
+        if (!user_id || !title || !task_description || !data) {
             return res.status(400).json({
                 msg: `Todos os campos são obrigatórios! ${user_id, title, task_description, task_status, data}`,
                 data: req.body
