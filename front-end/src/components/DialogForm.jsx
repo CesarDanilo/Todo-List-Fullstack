@@ -7,9 +7,15 @@ export default function DialogForm({ setIsOpen }) {
                 <div className="flex justify-end">
                     <button
                         onClick={() => setIsOpen(false)}
-                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                        className="bg-[#2196F3] text-white px-4 py-2 rounded hover:bg-[#2195f3de] cursor-pointer"
                     >
-                        Fechar
+                        EDIT
+                    </button>
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        className="bg-[#4CAF50] text-white px-4 py-2 rounded hover:bg-[#4caf4fde] cursor-pointer"
+                    >
+                        DONE
                     </button>
                 </div>
             </div>
