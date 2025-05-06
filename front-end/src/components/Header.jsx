@@ -14,7 +14,7 @@ export default function Header({ title, fetchTarefas }) {
 
             {/* Modal (condicional) */}
             {isOpen && (
-                <DialogForm setIsOpen={setIsOpen} fetchTarefas={fetchTarefas}/>
+                <DialogForm setIsOpen={setIsOpen} fetchTarefas={fetchTarefas} />
             )}
         </div>
     );
