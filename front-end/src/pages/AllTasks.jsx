@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import ActionsButtons from '../components/ActionsButtons';
+import { deleteTasks } from '../functions/deleteTask';
 
 export default function AllTasks() {
   const [tarefas, setTarefas] = useState([]);
@@ -28,6 +29,15 @@ export default function AllTasks() {
     }
   };
 
+  const handleDeleteTask = async (id) => {
+    try {
+      await deleteTasks(id);
+      fetchTarefas(); // Atualiza a lista após deletar
+    } catch (error) {
+      console.error("Erro ao deletar tarefa:", error);
+    }
+  };
+
   useEffect(() => {
     fetchTarefas();
   }, []);
@@ -46,7 +56,7 @@ export default function AllTasks() {
 
   return (
     <div className="p-4">
-      <Header title={'ALL TASKS'} />
+      <Header title={'ALL TASKS'} fetchTarefas={fetchTarefas}/>
       <table className="min-w-full rounded-lg overflow-hidden shadow-sm">
         {/* Cabeçalho da tabela (mantido igual) */}
         <thead>
@@ -69,8 +79,8 @@ export default function AllTasks() {
                 {tarefa.data ? new Date(tarefa.data).toLocaleDateString() : 'Sem data'}
               </td>
               <td className="flex px-6 py-4 text-sm gap-1 text-gray-600">
-                <ActionsButtons type={'Edit'} />
-                <ActionsButtons type={'Delete'} />
+                <ActionsButtons type="Edit" onClick={() => console.log("Editar", tarefa.id)} />
+                <ActionsButtons type="Delete" onClick={() => handleDeleteTask(tarefa.id)} />
               </td>
             </tr>
           ))}

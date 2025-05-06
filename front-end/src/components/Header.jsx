@@ -2,7 +2,7 @@ import { useState } from "react"; // ✅ Importar useState
 import ButtonNew from "./ButtonNew";
 import DialogForm from "./DialogForm";
 
-export default function Header({ title }) {
+export default function Header({ title, fetchTarefas }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -14,7 +14,7 @@ export default function Header({ title }) {
 
             {/* Modal (condicional) */}
             {isOpen && (
-                <DialogForm setIsOpen={setIsOpen} />
+                <DialogForm setIsOpen={setIsOpen} fetchTarefas={fetchTarefas}/>
             )}
         </div>
     );
