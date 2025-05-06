@@ -46,7 +46,7 @@ export default function AllTasks() {
 
   return (
     <div className="p-4">
-      <Header title={'ALL TASKS'} />
+      <Header title={'ALL TASKS'} onTaskSaved={fetchTarefas}/>
       <table className="min-w-full rounded-lg overflow-hidden shadow-sm">
         {/* Cabeçalho da tabela (mantido igual) */}
         <thead>
