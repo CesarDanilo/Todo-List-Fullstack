@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { registerTasks } from '../functions/registerTask';  // Substituído por import
 
-export default function DialogForm({ setIsOpen }) {
+export default function DialogForm({ setIsOpen, fetchTarefas }) {
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
     const [date, setDate] = useState();
@@ -17,6 +17,7 @@ export default function DialogForm({ setIsOpen }) {
         };
         if (await registerTasks(taskData)) {
             setIsOpen(false);
+            fetchTarefas();
         }  // Passa os dados para a função
     };
 
