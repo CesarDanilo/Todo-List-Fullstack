@@ -1,16 +1,20 @@
+// registerTask.js
+
 import axios from "axios";
 
-const registerTasks = async (dataTasks, id = null) => {
+export const registerTasks = async (taskData, id = null) => {
     const url = 'http://localhost:3001';
     const path = id ? `/tarefas/${id}` : '/tarefas/create-task';
     try {
         if (!id) {
-            const response = await axios.post(url + path, dataTasks);
-            if (response.status === 200) {
-                window.alert("Gravado com súcesso!");
+            const response = await axios.post(url + path, taskData);
+            if (response.status === 201) {
+                return true;
             } else {
-                window.alert("Aconteceu algum erro!");
+                return false;
             }
         }
-    } catch (error) { return error; }
-}
+    } catch (error) {
+        return error;
+    }
+};

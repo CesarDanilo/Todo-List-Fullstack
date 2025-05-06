@@ -1,15 +1,25 @@
 import { useState } from 'react';
+import { registerTasks } from '../functions/registerTask';  // Substituído por import
 
-const registerTasks = require('../functions/registerTask')
 export default function DialogForm({ setIsOpen }) {
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
     const [date, setDate] = useState();
     const [active, setActive] = useState();
-    
+
     const handleDone = async () => {
-        registerTasks();
-    }
+        const taskData = {
+            user_id: "3b285ded-7cb5-4554-ace8-dcc17c496928",
+            title,
+            task_description: description,
+            data: date,
+            task_status: active
+        };
+        if (await registerTasks(taskData)) {
+            setIsOpen(false);
+        }  // Passa os dados para a função
+    };
+
     return (
         <div className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-lg">
@@ -31,6 +41,7 @@ export default function DialogForm({ setIsOpen }) {
                     type="text"
                     name="title"
                     id="title"
+                    onChange={(e) => { setTitle(e.target.value) }}
                     placeholder="Digite o título"
                     className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
                 />
@@ -45,6 +56,7 @@ export default function DialogForm({ setIsOpen }) {
                 <textarea
                     className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
                     placeholder="Digite uma descrição..."
+                    onChange={(e) => { setDescription(e.target.value) }}
                 />
 
                 {/* Date */}
@@ -58,6 +70,7 @@ export default function DialogForm({ setIsOpen }) {
                     type="date"
                     name="date"
                     className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
+                    onChange={(e) => { setDate(e.target.value) }}
                 />
 
                 {/* Active */}
@@ -66,6 +79,7 @@ export default function DialogForm({ setIsOpen }) {
                         type="checkbox"
                         id="active"
                         className="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-1 focus:ring-gray-500"
+                        onChange={(e) => { setActive(e.target.checked) }}
                     />
                     <label htmlFor="active" className="font-medium text-gray-700">Active?</label>
                 </div>
@@ -85,7 +99,7 @@ export default function DialogForm({ setIsOpen }) {
                         EDIT
                     </button>
                     <button
-                        onClick={() => setIsOpen(false)}
+                        onClick={handleDone}
                         className="bg-green-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-green-600"
                     >
                         DONE
