@@ -1,11 +1,26 @@
-import { useState } from 'react';
-import { registerTasks } from '../functions/registerTask';  // Substituído por import
+import { useEffect, useState } from 'react';
+import { registerTasks } from '../functions/registerTask';
+import axios from 'axios';
 
-export default function DialogForm({ setIsOpen, fetchTarefas }) {
-    const [title, setTitle] = useState();
-    const [description, setDescription] = useState();
-    const [date, setDate] = useState();
-    const [active, setActive] = useState();
+export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [date, setDate] = useState('');
+    const [active, setActive] = useState(false);
+
+    useEffect(() => {
+        if (dados) {
+            setTitle(dados.title || '');
+            setDescription(dados.task_description || '');
+            setDate(dados.data ? new Date(dados.data).toISOString().split('T')[0] : '');
+            setActive(dados.task_status || false);
+        } else {
+            setTitle('');
+            setDescription('');
+            setDate('');
+            setActive(false);
+        }
+    }, [dados]);
 
     const handleDone = async () => {
         const taskData = {
@@ -18,7 +33,23 @@ export default function DialogForm({ setIsOpen, fetchTarefas }) {
         if (await registerTasks(taskData)) {
             setIsOpen(false);
             fetchTarefas();
-        }  // Passa os dados para a função
+        }
+    };
+
+    const handleEdit = async () => {
+        const updatedData = {
+            title,
+            task_description: description,
+            data: date,
+            task_status: active
+        };
+        try {
+            await axios.put(`http://localhost:3001/tarefas/${dados.id}`, updatedData);
+            fetchTarefas();
+            setIsOpen(false);
+        } catch (error) {
+            console.error('Erro ao editar tarefa:', error);
+        }
     };
 
     return (
@@ -28,7 +59,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas }) {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-7">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                     </svg>
-                    <h2 className="text-xl font-semibold mb-4">NEW TASK</h2>
+                    <h2 className="text-xl font-semibold mb-4">{dados ? 'EDIT TASK' : 'NEW TASK'}</h2>
                 </div>
 
                 {/* Title */}
@@ -40,9 +71,8 @@ export default function DialogForm({ setIsOpen, fetchTarefas }) {
                 </div>
                 <input
                     type="text"
-                    name="title"
-                    id="title"
-                    onChange={(e) => { setTitle(e.target.value) }}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     placeholder="Digite o título"
                     className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
                 />
@@ -55,11 +85,11 @@ export default function DialogForm({ setIsOpen, fetchTarefas }) {
                     <h2 className="font-semibold">Description</h2>
                 </div>
                 <textarea
-                    className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     placeholder="Digite uma descrição..."
-                    onChange={(e) => { setDescription(e.target.value) }}
+                    className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
                 />
-
                 {/* Date */}
                 <div className="flex gap-2 mt-5 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" className="size-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -69,18 +99,18 @@ export default function DialogForm({ setIsOpen, fetchTarefas }) {
                 </div>
                 <input
                     type="date"
-                    name="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
                     className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
-                    onChange={(e) => { setDate(e.target.value) }}
                 />
 
                 {/* Active */}
                 <div className="flex items-center gap-3 mt-5">
                     <input
                         type="checkbox"
-                        id="active"
+                        checked={active}
+                        onChange={(e) => setActive(e.target.checked)}
                         className="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-1 focus:ring-gray-500"
-                        onChange={(e) => { setActive(e.target.checked) }}
                     />
                     <label htmlFor="active" className="font-medium text-gray-700">Active?</label>
                 </div>
@@ -93,18 +123,21 @@ export default function DialogForm({ setIsOpen, fetchTarefas }) {
                     >
                         CANCEL
                     </button>
-                    <button
-                        onClick={() => setIsOpen(false)}
-                        className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-600"
-                    >
-                        EDIT
-                    </button>
-                    <button
-                        onClick={handleDone}
-                        className="bg-green-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-green-600"
-                    >
-                        DONE
-                    </button>
+                    {dados ? (
+                        <button
+                            onClick={handleEdit}
+                            className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-600"
+                        >
+                            EDIT
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleDone}
+                            className="bg-green-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-green-600"
+                        >
+                            DONE
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

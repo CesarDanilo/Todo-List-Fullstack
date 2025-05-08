@@ -4,12 +4,14 @@ import Header from '../components/Header';
 import ActionsButtons from '../components/ActionsButtons';
 import { deleteTasks } from '../functions/deleteTask';
 import DialogForm from '../components/DialogForm';
+import { getTaskForId } from '../functions/getTaskForId';
 
 export default function AllTasks() {
   const [tarefas, setTarefas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [dados, setDados] = useState([])
 
   const fetchTarefas = async () => {
     try {
@@ -41,8 +43,16 @@ export default function AllTasks() {
   };
 
   const handleUpdateTask = async (id) => {
-    setIsOpen(true);
+    try {
+      const tarefa = await getTaskForId(id);
+      setDados(tarefa); // ← Atualiza os dados corretamente
+      setIsOpen(true);
+    } catch (error) {
+      console.log("Erro no handleUpdateTask:", error)
+    }
   }
+
+
 
   useEffect(() => {
     fetchTarefas();
@@ -64,7 +74,7 @@ export default function AllTasks() {
     <div className="p-4">
       <Header title={'ALL TASKS'} fetchTarefas={fetchTarefas} />
       {isOpen && (
-        <DialogForm setIsOpen={setIsOpen} fetchTarefas={fetchTarefas}/>
+        <DialogForm setIsOpen={setIsOpen} fetchTarefas={fetchTarefas} dados={dados} />
       )}
       <table className="min-w-full rounded-lg overflow-hidden shadow-sm">
         {/* Cabeçalho da tabela (mantido igual) */}
