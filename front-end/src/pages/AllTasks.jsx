@@ -3,11 +3,13 @@ import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import ActionsButtons from '../components/ActionsButtons';
 import { deleteTasks } from '../functions/deleteTask';
+import DialogForm from '../components/DialogForm';
 
 export default function AllTasks() {
   const [tarefas, setTarefas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const fetchTarefas = async () => {
     try {
@@ -38,6 +40,10 @@ export default function AllTasks() {
     }
   };
 
+  const handleUpdateTask = async (id) => {
+    setIsOpen(true);
+  }
+
   useEffect(() => {
     fetchTarefas();
   }, []);
@@ -56,7 +62,10 @@ export default function AllTasks() {
 
   return (
     <div className="p-4">
-      <Header title={'ALL TASKS'} fetchTarefas={fetchTarefas}/>
+      <Header title={'ALL TASKS'} fetchTarefas={fetchTarefas} />
+      {isOpen && (
+        <DialogForm setIsOpen={setIsOpen} fetchTarefas={fetchTarefas}/>
+      )}
       <table className="min-w-full rounded-lg overflow-hidden shadow-sm">
         {/* Cabeçalho da tabela (mantido igual) */}
         <thead>
@@ -79,7 +88,7 @@ export default function AllTasks() {
                 {tarefa.data ? new Date(tarefa.data).toLocaleDateString() : 'Sem data'}
               </td>
               <td className="flex px-6 py-4 text-sm gap-1 text-gray-600">
-                <ActionsButtons type="Edit" onClick={() => console.log("Editar", tarefa.id)} />
+                <ActionsButtons type="Edit" onClick={() => handleUpdateTask(tarefa.id)} />
                 <ActionsButtons type="Delete" onClick={() => handleDeleteTask(tarefa.id)} />
               </td>
             </tr>
