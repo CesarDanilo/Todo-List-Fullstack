@@ -98,11 +98,12 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
                     <h2 className="font-semibold">Date</h2>
                 </div>
                 <input
-                    type="date"
+                    type="datetime-local"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
                 />
+
 
                 {/* Active */}
                 <div className="flex items-center gap-3 mt-5">

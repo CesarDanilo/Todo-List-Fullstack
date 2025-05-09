@@ -83,7 +83,7 @@ export default function AllTasks() {
             <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Title</th>
             <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Descrição</th>
             <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Status</th>
-            <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Data</th>
+            <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Data & Hora</th>
             <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Actions</th>
           </tr>
         </thead>
@@ -95,7 +95,7 @@ export default function AllTasks() {
               <td className="px-6 py-4 text-sm text-gray-600">{tarefa.task_description || 'Sem descrição'}</td>
               <td className={`px-6 py-4 text-sm text-gray-600 ${tarefa.task_status ? "text-green-500" : "text-red-700"}`}>{tarefa.task_status ? 'active' : 'disabled' || 'Sem status'}</td>
               <td className="px-6 py-4 text-sm text-gray-600">
-                {tarefa.data ? new Date(tarefa.data).toLocaleDateString() : 'Sem data'}
+                {tarefa.data ? new Date(tarefa.data).toLocaleString() : 'Sem data'}
               </td>
               <td className="flex px-6 py-4 text-sm gap-1 text-gray-600">
                 <ActionsButtons type="Edit" onClick={() => handleUpdateTask(tarefa.id)} />
