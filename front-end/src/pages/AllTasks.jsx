@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import ActionsButtons from '../components/ActionsButtons';
 import { deleteTasks } from '../functions/deleteTask';
 import DialogForm from '../components/DialogForm';
+import DialogDelete from '../components/DialogDelete';
 import { getTaskForId } from '../functions/getTaskForId';
 
 export default function AllTasks() {
@@ -11,19 +12,19 @@ export default function AllTasks() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [dados, setDados] = useState([])
+  const [dados, setDados] = useState([]);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
 
   const fetchTarefas = async () => {
     try {
       const response = await axios.get('http://localhost:3001/tarefas');
 
-      // Verifica se a resposta tem dados e é um array
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
       } else {
         throw new Error("Formato de dados inválido");
       }
-      setTarefas(response.data.data);
 
     } catch (error) {
       console.error("Erro ao buscar tarefas:", error);
@@ -36,7 +37,7 @@ export default function AllTasks() {
   const handleDeleteTask = async (id) => {
     try {
       await deleteTasks(id);
-      fetchTarefas(); // Atualiza a lista após deletar
+      fetchTarefas();
     } catch (error) {
       console.error("Erro ao deletar tarefa:", error);
     }
@@ -45,14 +46,29 @@ export default function AllTasks() {
   const handleUpdateTask = async (id) => {
     try {
       const tarefa = await getTaskForId(id);
-      setDados(tarefa); // ← Atualiza os dados corretamente
+      setDados(tarefa);
       setIsOpen(true);
     } catch (error) {
-      console.log("Erro no handleUpdateTask:", error)
+      console.log("Erro no handleUpdateTask:", error);
     }
-  }
+  };
 
+  const handleClickDelete = (tarefa) => {
+    setTarefaParaDeletar(tarefa);
+    setShowDeleteDialog(true);
+  };
 
+  const handleConfirmDelete = async () => {
+    if (!tarefaParaDeletar) return;
+    await handleDeleteTask(tarefaParaDeletar.id);
+    setShowDeleteDialog(false);
+    setTarefaParaDeletar(null);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteDialog(false);
+    setTarefaParaDeletar(null);
+  };
 
   useEffect(() => {
     fetchTarefas();
@@ -61,23 +77,19 @@ export default function AllTasks() {
   if (loading) return <div className="p-4">Carregando tarefas...</div>;
   if (error) return <div className="p-4 text-red-500">Erro: {error}</div>;
 
-  // Verifica se tarefas é um array antes de mapear
-  // if (!Array.isArray(tarefas) {
-  //   return <div className="p-4 text-yellow-600">Dados recebidos em formato inválido</div>;
-  // }
-
-  // if (tarefas.length === 0) {
-  //   return <div className="p-4">Nenhuma tarefa encontrada</div>;
-  // }
-
   return (
     <div className="p-4">
       <Header title={'ALL TASKS'} fetchTarefas={fetchTarefas} />
+
       {isOpen && (
         <DialogForm setIsOpen={setIsOpen} fetchTarefas={fetchTarefas} dados={dados} />
       )}
+
+      {showDeleteDialog && (
+        <DialogDelete onConfirm={handleConfirmDelete} onCancel={handleCancelDelete} />
+      )}
+
       <table className="min-w-full rounded-lg overflow-hidden shadow-sm">
-        {/* Cabeçalho da tabela (mantido igual) */}
         <thead>
           <tr className="bg-[#f1f1eb]">
             <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Title</th>
@@ -90,16 +102,18 @@ export default function AllTasks() {
 
         <tbody className="bg-white divide-y divide-gray-100">
           {tarefas.map((tarefa) => (
-            <tr key={tarefa.id || Math.random()} className="hover:bg-[#f9f9f5] transition-colors duration-150">
+            <tr key={tarefa.id} className="hover:bg-[#f9f9f5] transition-colors duration-150">
               <td className="px-6 py-4 text-sm font-medium text-gray-900">{tarefa.title || 'Sem título'}</td>
               <td className="px-6 py-4 text-sm text-gray-600">{tarefa.task_description || 'Sem descrição'}</td>
-              <td className={`px-6 py-4 text-sm text-gray-600 ${tarefa.task_status ? "text-green-500" : "text-red-700"}`}>{tarefa.task_status ? 'active' : 'disabled' || 'Sem status'}</td>
+              <td className={`px-6 py-4 text-sm ${tarefa.task_status ? "text-green-500" : "text-red-700"}`}>
+                {tarefa.task_status ? 'active' : 'disabled'}
+              </td>
               <td className="px-6 py-4 text-sm text-gray-600">
                 {tarefa.data ? new Date(tarefa.data).toLocaleString() : 'Sem data'}
               </td>
               <td className="flex px-6 py-4 text-sm gap-1 text-gray-600">
                 <ActionsButtons type="Edit" onClick={() => handleUpdateTask(tarefa.id)} />
-                <ActionsButtons type="Delete" onClick={() => handleDeleteTask(tarefa.id)} />
+                <ActionsButtons type="Delete" onClick={() => handleClickDelete(tarefa)} />
               </td>
             </tr>
           ))}
