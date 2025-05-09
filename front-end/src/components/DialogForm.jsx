@@ -12,7 +12,16 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
         if (dados) {
             setTitle(dados.title || '');
             setDescription(dados.task_description || '');
-            setDate(dados.data ? new Date(dados.data).toISOString().split('T')[0] : '');
+
+            if (dados.data) {
+                const localDateTime = new Date(dados.data);
+                const offset = localDateTime.getTimezoneOffset();
+                localDateTime.setMinutes(localDateTime.getMinutes() - offset);
+                setDate(localDateTime.toISOString().slice(0, 16)); // Formato adequado para datetime-local
+            } else {
+                setDate('');
+            }
+
             setActive(dados.task_status || false);
         } else {
             setTitle('');
@@ -90,6 +99,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
                     placeholder="Digite uma descrição..."
                     className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
                 />
+
                 {/* Date */}
                 <div className="flex gap-2 mt-5 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" className="size-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -103,7 +113,6 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
                     onChange={(e) => setDate(e.target.value)}
                     className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
                 />
-
 
                 {/* Active */}
                 <div className="flex items-center gap-3 mt-5">
