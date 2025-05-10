@@ -109,7 +109,10 @@ export default function AllTasks() {
                 {tarefa.task_status ? 'active' : 'disabled'}
               </td>
               <td className="px-6 py-4 text-sm text-gray-600">
-                {tarefa.data ? new Date(tarefa.data).toLocaleString() : 'Sem data'}
+                {/* {tarefa.data ? new Date(tarefa.data).toLocaleString() : 'Sem data'} */}
+                {tarefa.data
+                  ? new Date(new Date(tarefa.data).getTime() + 3 * 60 * 60 * 1000).toLocaleString()
+                  : 'Sem data'}
               </td>
               <td className="flex px-6 py-4 text-sm gap-1 text-gray-600">
                 <ActionsButtons type="Edit" onClick={() => handleUpdateTask(tarefa.id)} />

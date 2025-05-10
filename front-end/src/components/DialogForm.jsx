@@ -17,7 +17,10 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
                 const localDateTime = new Date(dados.data);
                 const offset = localDateTime.getTimezoneOffset();
                 localDateTime.setMinutes(localDateTime.getMinutes() - offset);
+                localDateTime.setHours(localDateTime.getHours() + 3);
                 setDate(localDateTime.toISOString().slice(0, 16)); // Formato adequado para datetime-local
+                console.log('Horário do servidor:', new Date());
+
             } else {
                 setDate('');
             }
