@@ -1,6 +1,6 @@
 export default function DialogDelete({ onCancel, onConfirm }) {
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-lg">
                 <div className="flex items-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
