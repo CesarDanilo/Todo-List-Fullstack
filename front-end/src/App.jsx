@@ -1,24 +1,15 @@
-import { useState } from 'react';
-import Sidebar from './components/Sidebar';
-import MainContent from './components/MainContent';
-import { contextNumberTasks } from './context/total_number_of_tasks';
-function App() {
-  const [selectedItem, setSelectedItem] = useState('Item 1');
-  const [tarefasLength, setTarefasLength] = useState();
-  const [pendingTarefasLength, setPendingTarefasLength] = useState();
-  const [completedTarefasLength, setCompletedTarefasLength] = useState();
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoginScreen from "./pages/auth/login_screen";
+import Dashboard from "./pages/dashboard/DashBoard";
 
+function App() {
   return (
-    <div className="flex h-screen">
-      <contextNumberTasks.Provider value={{
-        tarefasLength, setTarefasLength,
-        pendingTarefasLength, setPendingTarefasLength,
-        completedTarefasLength, setCompletedTarefasLength
-      }}>
-        <Sidebar onSelect={setSelectedItem} />
-        <MainContent selected={selectedItem} />
-      </contextNumberTasks.Provider >
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/user/auth" element={<LoginScreen />} />
+        <Route path="/" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

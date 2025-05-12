@@ -1,0 +1,24 @@
+import { useState } from 'react';
+import Sidebar from '../../components/Sidebar';
+import MainContent from '../../components/MainContent';
+import { contextNumberTasks } from '../../context/total_number_of_tasks';
+
+export default function Dashboard() {
+    const [selectedItem, setSelectedItem] = useState('Item 1');
+    const [tarefasLength, setTarefasLength] = useState();
+    const [pendingTarefasLength, setPendingTarefasLength] = useState();
+    const [completedTarefasLength, setCompletedTarefasLength] = useState();
+
+    return (
+        <div className="flex h-screen">
+            <contextNumberTasks.Provider value={{
+                tarefasLength, setTarefasLength,
+                pendingTarefasLength, setPendingTarefasLength,
+                completedTarefasLength, setCompletedTarefasLength
+            }}>
+                <Sidebar onSelect={setSelectedItem} />
+                <MainContent selected={selectedItem} />
+            </contextNumberTasks.Provider>
+        </div>
+    );
+}
