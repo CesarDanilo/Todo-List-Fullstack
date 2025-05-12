@@ -10,7 +10,11 @@ function App() {
 
   return (
     <div className="flex h-screen">
-      <contextNumberTasks.Provider value={{ tarefasLength, setTarefasLength, pendingTarefasLength, setPendingTarefasLength }}>
+      <contextNumberTasks.Provider value={{
+        tarefasLength, setTarefasLength,
+        pendingTarefasLength, setPendingTarefasLength,
+        completedTarefasLength, setCompletedTarefasLength
+      }}>
         <Sidebar onSelect={setSelectedItem} />
         <MainContent selected={selectedItem} />
       </contextNumberTasks.Provider >

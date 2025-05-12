@@ -1,6 +1,6 @@
 import AllTasks from "../pages/allTasks";
 import PendingTasks from "../pages/PendingTasks.jsx"; // Importe os outros componentes que você precisar
-// import CompletedTasks from "../pages/completedTasks";
+import CompletedTasks from "../pages/CompletedTasks.jsx";
 // import Trash from "../pages/trash";
 
 export default function MainContent({ selected }) {
@@ -11,8 +11,8 @@ export default function MainContent({ selected }) {
                 return <AllTasks />;
             case 'PENDING':
                 return <PendingTasks />;
-            // case 'COMPLETED':
-            //     return <CompletedTasks />;
+            case 'COMPLETED':
+                return <CompletedTasks />;
             // case 'TRASH':
             //     return <Trash />;
             default:

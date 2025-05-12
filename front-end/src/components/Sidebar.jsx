@@ -4,7 +4,7 @@ import { contextNumberTasks } from '../context/total_number_of_tasks';
 
 export default function Sidebar({ onSelect }) {
     const [activeItem, setActiveItem] = useState('ALL TASKS');
-    const { tarefasLength, pendingTarefasLength } = useContext(contextNumberTasks);
+    const { tarefasLength, pendingTarefasLength, completedTarefasLength } = useContext(contextNumberTasks);
 
     const handleItemClick = (item) => {
         setActiveItem(item);
@@ -25,7 +25,7 @@ export default function Sidebar({ onSelect }) {
                         const count = {
                             'ALL TASKS': tarefasLength,
                             'PENDING': pendingTarefasLength,
-                            'COMPLETED': 20,
+                            'COMPLETED': completedTarefasLength,
                             'TRASH': 12
                         }[item];
 
