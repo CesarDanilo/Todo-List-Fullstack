@@ -6,6 +6,7 @@ function App() {
   const [selectedItem, setSelectedItem] = useState('Item 1');
   const [tarefasLength, setTarefasLength] = useState();
   const [pendingTarefasLength, setPendingTarefasLength] = useState();
+  const [completedTarefasLength, setCompletedTarefasLength] = useState();
 
   return (
     <div className="flex h-screen">
