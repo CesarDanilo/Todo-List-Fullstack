@@ -21,12 +21,11 @@ export default function Sidebar({ onSelect }) {
             {/* Menu de navegação */}
             <div className="mb-12">
                 <ul className="space-y-4">
-                    {['ALL TASKS', 'PENDING', 'COMPLETED', 'TRASH'].map((item) => {
+                    {['ALL TASKS', 'PENDING', 'COMPLETED'].map((item) => {
                         const count = {
                             'ALL TASKS': tarefasLength,
                             'PENDING': pendingTarefasLength,
-                            'COMPLETED': completedTarefasLength,
-                            'TRASH': 12
+                            'COMPLETED': completedTarefasLength
                         }[item];
 
                         return (

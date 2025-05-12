@@ -21,7 +21,7 @@ export default function PendingTasks() {
 
   const fetchTarefas = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/tarefas/?task_status=false');
+      const response = await axios.get('http://localhost:3001/tarefas/?task_status=true');
 
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
