@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import logo from '../img/logo/t.png';
+import { contextNumberTasks } from '../context/total_number_of_tasks';
 
 export default function Sidebar({ onSelect }) {
     const [activeItem, setActiveItem] = useState('ALL TASKS');
+    const { tarefasLength } = useContext(contextNumberTasks);
 
     const handleItemClick = (item) => {
         setActiveItem(item);
@@ -21,7 +23,7 @@ export default function Sidebar({ onSelect }) {
                 <ul className="space-y-4">
                     {['ALL TASKS', 'PENDING', 'COMPLETED', 'TRASH'].map((item) => {
                         const count = {
-                            'ALL TASKS': 60,
+                            'ALL TASKS': tarefasLength,
                             'PENDING': 40,
                             'COMPLETED': 20,
                             'TRASH': 12
