@@ -1,6 +1,6 @@
-import AllTasks from "../pages/allTasks";
-import PendingTasks from "../pages/PendingTasks.jsx"; // Importe os outros componentes que você precisar
-import CompletedTasks from "../pages/CompletedTasks.jsx";
+import AllTasks from "../pages/dashboard/components/AllTasks.jsx";
+import PendingTasks from "../pages/dashboard/components/PendingTasks.jsx"; // Importe os outros componentes que você precisar
+import CompletedTasks from "../pages/dashboard/components/CompletedTasks.jsx";
 // import Trash from "../pages/trash";
 
 export default function MainContent({ selected }) {

@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
-import Header from '../components/Header';
-import ActionsButtons from '../components/ActionsButtons';
-import { deleteTasks } from '../functions/deleteTask';
-import DialogForm from '../components/DialogForm';
-import DialogDelete from '../components/DialogDelete';
-import { getTaskForId } from '../functions/getTaskForId';
-import { contextNumberTasks } from '../context/total_number_of_tasks';
+import Header from '../../../components/Header';
+import ActionsButtons from '../../../components/ActionsButtons';
+import { deleteTasks } from '../../../functions/deleteTask';
+import DialogForm from '../../../components/DialogForm';
+import DialogDelete from '../../../components/DialogDelete';
+import { getTaskForId } from '../../../functions/getTaskForId';
+import { contextNumberTasks } from '../../../context/total_number_of_tasks';
 
 export default function CompletedTasks() {
   const [tarefas, setTarefas] = useState([]);

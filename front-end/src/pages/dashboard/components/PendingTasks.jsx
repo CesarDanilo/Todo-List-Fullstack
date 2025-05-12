@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
-import Header from '../components/Header';
-import ActionsButtons from '../components/ActionsButtons';
-import { deleteTasks } from '../functions/deleteTask';
-import DialogForm from '../components/DialogForm';
-import DialogDelete from '../components/DialogDelete';
-import { getTaskForId } from '../functions/getTaskForId';
-import { contextNumberTasks } from '../context/total_number_of_tasks';
+import Header from '../../../components/Header';
+import ActionsButtons from '../../../components/ActionsButtons';
+import { deleteTasks } from '../../../functions/deleteTask';
+import DialogForm from '../../../components/DialogForm';
+import DialogDelete from '../../../components/DialogDelete';
+import { getTaskForId } from '../../../functions/getTaskForId';
+import { contextNumberTasks } from '../../../context/total_number_of_tasks';
 
-export default function AllTasks({ children }) {
+export default function PendingTasks() {
   const [tarefas, setTarefas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,15 +17,15 @@ export default function AllTasks({ children }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
 
-  const { setTarefasLength } = useContext(contextNumberTasks);
+  const { setPendingTarefasLength } = useContext(contextNumberTasks);
 
   const fetchTarefas = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/tarefas');
+      const response = await axios.get('http://localhost:3001/tarefas/?task_status=true');
 
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
-        setTarefasLength(response.data.data.length);
+        setPendingTarefasLength(response.data.data.length);
       } else {
         throw new Error("Formato de dados inválido");
       }
@@ -84,7 +84,7 @@ export default function AllTasks({ children }) {
   return (
     <div className="p-4">
 
-      <Header title={'ALL TASKS'} fetchTarefas={fetchTarefas} />
+      <Header title={'PENDING'} fetchTarefas={fetchTarefas} />
 
       {isOpen && (
         <DialogForm setIsOpen={setIsOpen} fetchTarefas={fetchTarefas} dados={dados} />
