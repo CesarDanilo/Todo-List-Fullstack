@@ -17,6 +17,7 @@ export default function LoginScreen() {
     const handleCreateAccount = async (e) => {
         e.preventDefault();
         const data = { email, name, password };
+        console.log(data)
 
         const result = await CreateAccount(data);
         if (result.success) {

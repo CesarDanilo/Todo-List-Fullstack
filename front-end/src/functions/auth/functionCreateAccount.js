@@ -24,7 +24,7 @@ export default async function CreateAccount(data) {
 
     try {
         const response = await axios.post("http://localhost:3001/usuarios/auth/register", {
-            name: data.name,
+            username: data.name,
             email: data.email,
             password: data.password,
         });
