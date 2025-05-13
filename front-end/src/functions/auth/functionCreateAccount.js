@@ -20,7 +20,7 @@ export default async function CreateAccount(data) {
     }
 
     try {
-        const response = await axios.post("/api/register", {
+        const response = await axios.post("/usuarios/auth/register", {
             name: data.name,
             email: data.email,
             password: data.password,
