@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import validationAccount from '../../functions/auth/functionValidationAccount';
 import CreateAccount from '../../functions/auth/functionCreateAccount';
 
 export default function LoginScreen() {
@@ -10,8 +11,20 @@ export default function LoginScreen() {
 
     const handleLoginAccount = async (e) => {
         e.preventDefault();
-        // Lógica de login virá aqui futuramente
-        console.log("Login não implementado ainda.");
+        const data = { email, password };
+
+        console.log("dados enviados: ", data)
+        const result = await validationAccount(data)
+
+        if (result.success) {
+            setMessage("Conta logada com sucesso!");
+            // Limpa os campos
+            setEmail("");
+            setPassword("");
+            setIsRegistering(false); // opcional: redireciona para tela de login
+        } else {
+            setMessage(result.message || "Erro ao logar conta.");
+        }
     };
 
     const handleCreateAccount = async (e) => {
