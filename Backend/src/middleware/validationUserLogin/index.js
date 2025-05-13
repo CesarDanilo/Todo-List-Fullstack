@@ -44,4 +44,4 @@ const validationUserLogin = async (req, res) => {
     }
 };
 
-module.exports = { validationUserLogin };
+module.exports = validationUserLogin;
