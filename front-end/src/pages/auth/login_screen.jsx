@@ -29,6 +29,7 @@ export default function LoginScreen() {
                             type="email"
                             id="email"
                             placeholder="seuemail@email.com"
+                            onChange={(e) => { setEmail(e.target.value) }}
                             className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -41,6 +42,7 @@ export default function LoginScreen() {
                             <input
                                 type="text"
                                 id="name"
+                                onChange={(e) => { setName(e.target.value) }}
                                 placeholder="Seu nome completo"
                                 className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
@@ -54,6 +56,7 @@ export default function LoginScreen() {
                         <input
                             type="password"
                             id="password"
+                            onChange={(e) => { setPassword(e.target.value) }}
                             placeholder="••••••••"
                             className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
