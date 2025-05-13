@@ -3,6 +3,13 @@ import { useState } from 'react';
 export default function LoginScreen() {
     const [isRegistering, setIsRegistering] = useState(false);
 
+    const handleCreateAccount = async () => {
+        window.alert("conta criada!")
+    }
+    const handleLoginAccount = async () => {
+        window.alert("login feito!")
+    }
+
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">
             <div className="w-full max-w-sm p-8 bg-white rounded-2xl shadow-md">
@@ -51,6 +58,7 @@ export default function LoginScreen() {
 
                     <button
                         type="submit"
+                        onClick={isRegistering ? handleCreateAccount : handleLoginAccount}
                         className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
                     >
                         {isRegistering ? 'Criar Conta' : 'Entrar'}
@@ -60,7 +68,7 @@ export default function LoginScreen() {
                 <p className="mt-6 text-center text-sm text-gray-500">
                     {isRegistering ? 'Já tem uma conta?' : 'Não tem uma conta?'}{' '}
                     <button
-                        onClick={() => setIsRegistering(!isRegistering)}
+                        onClick={() => { setIsRegistering(!isRegistering) }}
                         className="text-blue-600 hover:underline focus:outline-none"
                     >
                         {isRegistering ? 'Fazer login' : 'Criar conta'}
