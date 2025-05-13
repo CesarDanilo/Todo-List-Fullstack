@@ -2,12 +2,15 @@ import { useState } from 'react';
 
 export default function LoginScreen() {
     const [isRegistering, setIsRegistering] = useState(false);
+    const [email, setEmail] = useState();
+    const [name, setName] = useState();
+    const [password, setPassword] = useState();
 
-    const handleCreateAccount = async () => {
-        window.alert("conta criada!")
-    }
     const handleLoginAccount = async () => {
         window.alert("login feito!")
+    }
+    const handleCreateAccount = async () => {
+        window.alert("conta criada!")
     }
 
     return (
