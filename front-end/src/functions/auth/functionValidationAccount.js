@@ -26,8 +26,6 @@ export default async function validationAccount(data) {
             localStorage.setItem('user', JSON.stringify(response.data.dados));
             console.log("Dados gravados no localStorage");
 
-            // Navigation should be handled in the component that calls this function
-            // navigate("/");
             return response.data; // Return the response data for the component to use
         }
     } catch (error) {
