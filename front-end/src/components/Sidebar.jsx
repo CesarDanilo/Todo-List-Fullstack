@@ -5,12 +5,36 @@ import { contextNumberTasks } from '../context/total_number_of_tasks';
 export default function Sidebar({ onSelect }) {
     const [activeItem, setActiveItem] = useState('ALL TASKS');
     const { tarefasLength, pendingTarefasLength, completedTarefasLength } = useContext(contextNumberTasks);
+    const [name, setName] = useState();
+
+    const getNameLocalStorage = () => {
+        try {
+            const userString = localStorage.getItem('user');
+            if (!userString) {
+                console.warn('No user data found in localStorage');
+                return;
+            }
+
+            const user = JSON.parse(userString);
+            if (user && user.name) {
+                setName(user.name);
+            } else {
+                console.warn('User name not found in localStorage data');
+            }
+        } catch (error) {
+            console.error('Error parsing user data from localStorage:', error);
+        }
+    };
 
     const handleItemClick = (item) => {
         setActiveItem(item);
         onSelect(item);
     };
 
+    useEffect(() => {
+        getNameLocalStorage();
+    }, []);
+    
     return (
         <div className="w-[350px] text-white p-10" style={{ backgroundColor: '#f1f1eb' }}>
             {/* Logo */}
@@ -47,7 +71,7 @@ export default function Sidebar({ onSelect }) {
 
             {/* Rodapé com nome */}
             <div className="text-gray-950 font-bold font-sans text-lg">
-                CÉSAR DANILO
+                {name}
             </div>
         </div>
     );
