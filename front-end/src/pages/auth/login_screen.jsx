@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import validationAccount from '../../functions/auth/functionValidationAccount';
 import CreateAccount from '../../functions/auth/functionCreateAccount';
+import { useNavigate } from "react-router-dom";
 
 export default function LoginScreen() {
     const [isRegistering, setIsRegistering] = useState(false);
@@ -8,6 +9,7 @@ export default function LoginScreen() {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleLoginAccount = async (e) => {
         e.preventDefault();
@@ -22,6 +24,8 @@ export default function LoginScreen() {
             setEmail("");
             setPassword("");
             setIsRegistering(false); // opcional: redireciona para tela de login
+            navigate("/");
+
         } else {
             setMessage(result.message || "Erro ao logar conta.");
         }
