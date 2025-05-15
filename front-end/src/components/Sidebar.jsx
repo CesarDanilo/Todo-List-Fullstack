@@ -61,7 +61,7 @@ export default function Sidebar({ onSelect }) {
     try {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      navigate('/usuarios/auth');
+      navigate('/');
     } catch (error) {
       console.error('Erro ao tentar sair:', error);
     }
