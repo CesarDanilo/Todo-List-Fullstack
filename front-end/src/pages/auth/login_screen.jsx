@@ -25,7 +25,7 @@ export default function LoginScreen() {
                 setMessage("Login realizado com sucesso!");
                 setEmail("");
                 setPassword("");
-                navigate("/"); // Redirect after successful login
+                navigate("/dashboard"); // Redirect after successful login
             } else {
                 setMessage(result?.message || "Credenciais inválidas. Tente novamente.");
             }
