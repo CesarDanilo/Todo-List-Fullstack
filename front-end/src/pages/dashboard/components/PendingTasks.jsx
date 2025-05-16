@@ -37,7 +37,7 @@ export default function PendingTasks() {
 
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:3001/tarefas/?user_id=${userId}&task_status=true`);
+      const response = await axios.get(`http://localhost:3001/tarefas/?users_id=${userId}&task_status=true`);
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
         setPendingTarefasLength(response.data.data.length);

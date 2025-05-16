@@ -35,7 +35,7 @@ export default function AllTasks() {
   const fetchTarefas = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:3001/tarefas/?user_id=${userId}`);
+      const response = await axios.get(`http://localhost:3001/tarefas/?users_id=${userId}`);
       console.log("AQUI ESTA O ID DO USUARIO: ", `http://localhost:3001/tarefas/?user_id=${userId}`)
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
