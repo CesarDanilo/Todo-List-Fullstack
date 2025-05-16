@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import logo from '../img/logo/t.png';
+import logo from '../img/logo/2.png';
 import { contextNumberTasks } from '../context/total_number_of_tasks';
 
 export default function Sidebar({ onSelect }) {
@@ -18,7 +18,6 @@ export default function Sidebar({ onSelect }) {
   const [name, setName] = useState('');
   const navigate = useNavigate();
 
-  // Carrega nome do usuário e tarefas
   useEffect(() => {
     const getUserName = () => {
       try {
@@ -68,14 +67,14 @@ export default function Sidebar({ onSelect }) {
   };
 
   return (
-    <div className="w-[350px] text-white p-10" style={{ backgroundColor: '#f1f1eb' }}>
+    <div className="w-[350px] p-10 bg-[#0f0f0f] text-[#e5e5e5] font-sans flex flex-col justify-between h-screen">
       {/* Logo */}
-      <div className="mb-12">
-        <img src={logo} alt="logo" className="w-[200px] h-auto" />
+      <div className="mb-12 flex justify-center">
+        <img src={logo} alt="Logo" className="w-[150px] h-auto" />
       </div>
 
       {/* Navegação */}
-      <div className="mb-12">
+      <nav className="mb-12">
         <ul className="space-y-4">
           {[
             { label: 'ALL TASKS', count: tarefasLength },
@@ -85,28 +84,46 @@ export default function Sidebar({ onSelect }) {
             <li
               key={label}
               onClick={() => handleItemClick(label)}
-              className={`flex justify-between items-center cursor-pointer text-gray-950 font-sans text-lg hover:bg-[#E4E4E4] p-2 rounded ${activeItem === label ? 'border-l-4 border-black bg-[#E4E4E4]' : ''
-                }`}
+              className={`flex justify-between items-center cursor-pointer px-4 py-2 rounded-md transition-colors
+                ${activeItem === label
+                  ? 'bg-[#1c1c1c] border-l-4 border-indigo-500 text-indigo-400 font-semibold'
+                  : 'hover:bg-[#1f1f1f] text-[#e5e5e5]'
+                }
+              `}
             >
               <span>{label}</span>
-              <span className="bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm">
+              <span className="bg-[#2a2a2a] text-white rounded-full px-3 py-1 text-sm">
                 {count}
               </span>
             </li>
           ))}
         </ul>
-      </div>
-
+      </nav>
 
       {/* Rodapé */}
-      <div className="text-gray-950 font-bold font-sans text-lg flex justify-between items-center">
+      <footer className="text-[#e5e5e5] font-semibold text-lg flex justify-between items-center">
         <span>{name || 'Usuário'}</span>
-        <button onClick={handleLogoutClick} className="cursor-pointer">
-          <svg xmlns="http://www.w3.org/2000/svg" className="size-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+        <button
+          onClick={handleLogoutClick}
+          className="p-2 rounded hover:bg-[#1f1f1f] transition-colors"
+          aria-label="Logout"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="#e5e5e5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+            />
           </svg>
         </button>
-      </div>
+      </footer>
     </div>
   );
 }

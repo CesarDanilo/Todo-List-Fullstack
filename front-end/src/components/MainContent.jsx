@@ -1,10 +1,9 @@
 import AllTasks from "../pages/dashboard/components/AllTasks.jsx";
-import PendingTasks from "../pages/dashboard/components/PendingTasks.jsx"; // Importe os outros componentes que você precisar
+import PendingTasks from "../pages/dashboard/components/PendingTasks.jsx";
 import CompletedTasks from "../pages/dashboard/components/CompletedTasks.jsx";
 // import Trash from "../pages/trash";
 
 export default function MainContent({ selected }) {
-    // Função para renderizar o componente correto baseado na seleção
     const renderContent = () => {
         switch (selected) {
             case 'ALL TASKS':
@@ -16,12 +15,12 @@ export default function MainContent({ selected }) {
             // case 'TRASH':
             //     return <Trash />;
             default:
-                return <AllTasks />; // Padrão para quando não houver seleção
+                return <AllTasks />;
         }
     };
 
     return (
-        <div className="flex-1 p-11 overflow-auto justify-center align-middle" style={{ backgroundColor: '#f1f1eb' }}>
+        <div className="flex-1 p-11 overflow-auto bg-[#0f0f0f] text-[#e5e5e5]">
             {renderContent()}
         </div>
     );

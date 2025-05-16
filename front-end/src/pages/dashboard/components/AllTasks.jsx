@@ -8,7 +8,7 @@ import DialogDelete from '../../../components/DialogDelete';
 import { getTaskForId } from '../../../functions/getTaskForId';
 import { contextNumberTasks } from '../../../context/total_number_of_tasks';
 
-export default function AllTasks({ children }) {
+export default function AllTasks() {
   const [tarefas, setTarefas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,14 +22,12 @@ export default function AllTasks({ children }) {
   const fetchTarefas = async () => {
     try {
       const response = await axios.get('http://localhost:3001/tarefas');
-
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
         setTarefasLength(response.data.data.length);
       } else {
         throw new Error("Formato de dados inválido");
       }
-
     } catch (error) {
       console.error("Erro ao buscar tarefas:", error);
       setError(error.message || "Erro ao carregar tarefas");
@@ -78,11 +76,11 @@ export default function AllTasks({ children }) {
     fetchTarefas();
   }, []);
 
-  if (loading) return <div className="p-4">Carregando tarefas...</div>;
-  if (error) return <div className="p-4 text-red-500">Erro: {error}</div>;
+  if (loading) return <div className="p-4 text-gray-200">Carregando tarefas...</div>;
+  if (error) return <div className="p-4 text-red-400">Erro: {error}</div>;
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-[#0f0f0f] text-gray-200 min-h-screen">
 
       <Header title={'ALL TASKS'} fetchTarefas={fetchTarefas} />
 
@@ -94,32 +92,31 @@ export default function AllTasks({ children }) {
         <DialogDelete onConfirm={handleConfirmDelete} onCancel={handleCancelDelete} />
       )}
 
-      <table className="min-w-full rounded-lg overflow-hidden shadow-sm">
+      <table className="w-full text-sm">
         <thead>
-          <tr className="bg-[#f1f1eb]">
-            <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Title</th>
-            <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Descrição</th>
-            <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Status</th>
-            <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Data & Hora</th>
-            <th className="px-6 py-4 text-left text-sm font-medium text-gray-700 border-b border-gray-200">Actions</th>
+          <tr className="text-gray-400 uppercase text-xs tracking-wider">
+            <th className="text-left px-4 py-2">Title</th>
+            <th className="text-left px-4 py-2">Descrição</th>
+            <th className="text-left px-4 py-2">Status</th>
+            <th className="text-left px-4 py-2">Data & Hora</th>
+            <th className="text-left px-4 py-2">Ações</th>
           </tr>
         </thead>
 
-        <tbody className="bg-white divide-y divide-gray-100">
+        <tbody>
           {tarefas.map((tarefa) => (
-            <tr key={tarefa.id} className="hover:bg-[#f9f9f5] transition-colors duration-150">
-              <td className="px-6 py-4 text-sm font-medium text-gray-900">{tarefa.title || 'Sem título'}</td>
-              <td className="px-6 py-4 text-sm text-gray-600">{tarefa.task_description || 'Sem descrição'}</td>
-              <td className={`px-6 py-4 text-sm ${tarefa.task_status ? "text-green-500" : "text-red-700"}`}>
+            <tr key={tarefa.id} className="hover:bg-[#1a1a1a] rounded transition-colors">
+              <td className="px-4 py-2 text-gray-100">{tarefa.title || 'Sem título'}</td>
+              <td className="px-4 py-2 text-gray-400">{tarefa.task_description || 'Sem descrição'}</td>
+              <td className={`px-4 py-2 ${tarefa.task_status ? "text-green-400" : "text-red-500"}`}>
                 {tarefa.task_status ? 'active' : 'disabled'}
               </td>
-              <td className="px-6 py-4 text-sm text-gray-600">
-                {/* {tarefa.data ? new Date(tarefa.data).toLocaleString() : 'Sem data'} */}
+              <td className="px-4 py-2 text-gray-400">
                 {tarefa.data
                   ? new Date(new Date(tarefa.data).getTime() + 3 * 60 * 60 * 1000).toLocaleString()
                   : 'Sem data'}
               </td>
-              <td className="flex px-6 py-4 text-sm gap-1 text-gray-600">
+              <td className="px-4 py-2 flex gap-1">
                 <ActionsButtons type="Edit" onClick={() => handleUpdateTask(tarefa.id)} />
                 <ActionsButtons type="Delete" onClick={() => handleClickDelete(tarefa)} />
               </td>
