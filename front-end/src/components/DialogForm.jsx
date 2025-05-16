@@ -7,6 +7,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
     const [active, setActive] = useState(false);
+    const [userId, setUserId] = useState();
 
     useEffect(() => {
         if (dados) {
@@ -18,9 +19,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
                 const offset = localDateTime.getTimezoneOffset();
                 localDateTime.setMinutes(localDateTime.getMinutes() - offset);
                 localDateTime.setHours(localDateTime.getHours() + 3);
-                setDate(localDateTime.toISOString().slice(0, 16)); // Formato adequado para datetime-local
-                console.log('Horário do servidor:', new Date());
-
+                setDate(localDateTime.toISOString().slice(0, 16));
             } else {
                 setDate('');
             }
@@ -34,9 +33,25 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
         }
     }, [dados]);
 
+    useEffect(() => {
+        loadUserIdFromLocalStorage();
+    }, []);
+
+    const loadUserIdFromLocalStorage = () => {
+        try {
+            const userString = localStorage.getItem('user');
+            if (!userString) return;
+
+            const user = JSON.parse(userString);
+            if (user?.userId) setUserId(user.userId);
+        } catch (error) {
+            console.log(`ERROR! Não foi possível buscar o id de usuário: ${error}`);
+        }
+    };
+
     const handleDone = async () => {
         const taskData = {
-            user_id: "3b285ded-7cb5-4554-ace8-dcc17c496928",
+            user_id: userId,
             title,
             task_description: description,
             data: date,
@@ -66,7 +81,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
 
     return (
         <div className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-lg">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-lg text-gray-900 dark:text-gray-100">
                 <div className="flex gap-4 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-7">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
@@ -86,7 +101,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Digite o título"
-                    className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
+                    className="w-full px-3 py-2 mt-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
                 />
 
                 {/* Description */}
@@ -100,7 +115,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Digite uma descrição..."
-                    className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
+                    className="w-full px-3 py-2 mt-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
                 />
 
                 {/* Date */}
@@ -114,7 +129,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
                     type="datetime-local"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
+                    className="w-full px-3 py-2 mt-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500"
                 />
 
                 {/* Active */}
@@ -125,14 +140,14 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
                         onChange={(e) => setActive(e.target.checked)}
                         className="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-1 focus:ring-gray-500"
                     />
-                    <label htmlFor="active" className="font-medium text-gray-700">Active?</label>
+                    <label htmlFor="active" className="font-medium text-gray-700 dark:text-gray-300">Active?</label>
                 </div>
 
                 {/* Buttons */}
                 <div className="flex justify-end mt-6 gap-2">
                     <button
                         onClick={() => setIsOpen(false)}
-                        className="text-gray-600 px-4 py-2 rounded cursor-pointer hover:bg-gray-100"
+                        className="text-gray-600 dark:text-gray-300 px-4 py-2 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                         CANCEL
                     </button>

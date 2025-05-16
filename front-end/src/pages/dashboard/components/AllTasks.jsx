@@ -16,12 +16,27 @@ export default function AllTasks() {
   const [dados, setDados] = useState([]);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
+  const [userId, setUserId] = useState();
 
   const { setTarefasLength } = useContext(contextNumberTasks);
 
+  const loadUserIdFromLocalStorage = () => {
+    try {
+      const userString = localStorage.getItem('user');
+      if (!userString) return;
+
+      const user = JSON.parse(userString);
+      if (user?.userId) setUserId(user.userId);
+    } catch (error) {
+      console.log(`ERROR! Não foi possível buscar o id de usuário: ${error}`);
+    }
+  };
+
   const fetchTarefas = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/tarefas');
+      setLoading(true);
+      const response = await axios.get(`http://localhost:3001/tarefas/?user_id=${userId}`);
+      console.log("AQUI ESTA O ID DO USUARIO: ", `http://localhost:3001/tarefas/?user_id=${userId}`)
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
         setTarefasLength(response.data.data.length);
@@ -72,9 +87,17 @@ export default function AllTasks() {
     setTarefaParaDeletar(null);
   };
 
+  // Carrega o ID do usuário ao montar o componente
   useEffect(() => {
-    fetchTarefas();
+    loadUserIdFromLocalStorage();
   }, []);
+
+  // Só busca as tarefas quando userId estiver definido
+  useEffect(() => {
+    if (userId) {
+      fetchTarefas();
+    }
+  }, [userId]);
 
   if (loading) return <div className="p-4 text-gray-200">Carregando tarefas...</div>;
   if (error) return <div className="p-4 text-red-400">Erro: {error}</div>;
