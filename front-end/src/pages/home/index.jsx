@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import logo from '../../img/logo/logo-oficial-homepage.png';
+import logohead from '../../img/logo/2.png';
 
 export default function HomePage() {
     const navigate = useNavigate();
@@ -7,75 +9,52 @@ export default function HomePage() {
         navigate('/usuarios/auth');
     };
 
-    const handleRegister = () => {
-        navigate('/usuarios/create');
-    };
-
     return (
-        <div className="min-h-screen bg-black text-white flex flex-col">
+        <div className="min-h-screen bg-black text-white flex flex-col font-sans">
             {/* Navbar */}
-            <header className="w-full flex justify-between items-center px-8 py-6 border-b border-white/10">
-                <h1 className="text-2xl font-bold">TodoMaster</h1>
-                <div className="space-x-4">
-                    <button
-                        onClick={handleLogin}
-                        className="px-5 py-2 border border-white text-white rounded-lg transition duration-200 hover:bg-white hover:text-black"
-                    >
-                        Login
-                    </button>
-                    {/* <button
-                        onClick={handleLogin}
-                        className="px-5 py-2 bg-white text-black rounded-lg transition duration-200 hover:bg-gray-300"
-                    >
-                        Criar Conta
-                    </button> */}
+            <nav className="w-full flex justify-between items-center px-6 py-4 border-b border-white/10">
+                <div className="flex items-center space-x-2">
+                    <img src={logohead} alt="Logo principal" className="h-12 md:h-14 object-contain" />
                 </div>
-            </header>
+                <button
+                    onClick={handleLogin}
+                    className="px-4 py-2 border border-white/20 text-white/80 rounded-lg hover:bg-white hover:text-black transition duration-200 focus:outline-none focus:ring-2 focus:ring-white"
+                >
+                    Login
+                </button>
+            </nav>
 
             {/* Hero Section */}
-            <main className="flex flex-col md:flex-row items-center justify-between px-8 py-20 flex-1">
-                {/* Text Section */}
-                <div className="md:w-1/2 space-y-6">
-                    <h2 className="text-4xl md:text-6xl font-bold leading-tight">
-                        Organize sua <span className="text-white/70">vida</span> com nossa TodoList
+            <section className="flex flex-col md:flex-row items-center justify-between px-8 py-12 md:py-24 flex-1">
+                <div className="md:w-1/2 space-y-6 text-center md:text-left max-w-xl">
+                    <h2 className="text-4xl md:text-6xl font-light tracking-tight leading-snug">
+                        Organize sua <span className="text-white/60">vida</span> com nossa TodoList
                     </h2>
-                    <p className="text-lg text-white/60">
+                    <p className="text-lg text-white/50 mx-auto md:mx-0">
                         Aumente sua produtividade com uma ferramenta minimalista, rápida e feita para o dia a dia.
                     </p>
-                    <div className="space-x-4">
+                    <div className="mt-4">
                         <button
                             onClick={handleLogin}
-                            className="px-6 py-3 bg-white cursor-pointer text-black rounded-lg transition duration-200 hover:bg-gray-300"
+                            className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-300 transition duration-200 focus:outline-none focus:ring-2 focus:ring-white"
                         >
-                            Começar Agora
+                            Começar agora
                         </button>
-                        {/* <button
-                            onClick={handleLogin}
-                            className="px-6 py-3 border border-white cursor-pointer text-white rounded-lg transition duration-200 hover:bg-white hover:text-black"
-                        >
-                            Fazer Login
-                        </button> */}
                     </div>
                 </div>
 
-                {/* Image Section */}
                 <div className="md:w-1/2 mt-10 md:mt-0">
                     <img
-                        src="/assets/img/todolist-hero.png"
+                        src={logo}
                         alt="Ilustração do sistema"
-                        className="w-full max-w-md mx-auto"
+                        className="w-full max-w-sm md:max-w-md mx-auto opacity-90 object-contain"
                     />
                 </div>
-            </main>
+            </section>
 
             {/* Footer */}
-            <footer className="w-full bg-black border-t border-white/10 px-8 py-6">
-                <p className="text-center text-white/40 text-sm">© 2025 TodoMaster. Todos os direitos reservados.</p>
-                <div className="flex items-center justify-center space-x-6 mt-4">
-                    <img src="/assets/img/logo1.svg" alt="Logo 1" className="h-6" />
-                    <img src="/assets/img/logo2.svg" alt="Logo 2" className="h-6" />
-                    <img src="/assets/img/logo3.svg" alt="Logo 3" className="h-6" />
-                </div>
+            <footer className="w-full border-t border-white/10 px-6 py-4 text-sm text-white/30">
+                <p className="text-center">© 2025 Todo Master. Todos os direitos reservados.</p>
             </footer>
         </div>
     );
