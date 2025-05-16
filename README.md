@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/86db09fc-3010-4e50-84db-51bf0e5514ea" alt="Todo List Logo" width="120" />
+  <img src='https://github.com/user-attachments/assets/f88bbf98-0508-40ae-91c6-533e4ccc314a' alt="Todo List Logo" width="150" /> 
 </p>
 
 <p align="center">
