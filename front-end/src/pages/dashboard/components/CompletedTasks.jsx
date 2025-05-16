@@ -16,12 +16,29 @@ export default function CompletedTasks() {
   const [dados, setDados] = useState([]);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const { setCompletedTarefasLength } = useContext(contextNumberTasks);
 
-  const fetchTarefas = async () => {
+  const loadUserIdFromLocalStorage = () => {
     try {
-      const response = await axios.get('http://localhost:3001/tarefas/?task_status=false');
+      const userString = localStorage.getItem('user');
+      if (!userString) return;
+
+      const user = JSON.parse(userString);
+      if (user?.userId) setUserId(user.userId);
+    } catch (error) {
+      console.error("Erro ao carregar ID do usuário:", error);
+    }
+  };
+
+  const fetchTarefas = async () => {
+    if (!userId) return;
+
+    setLoading(true);
+
+    try {
+      const response = await axios.get(`http://localhost:3001/tarefas/?user_id=${userId}&task_status=false`);
 
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
@@ -75,15 +92,20 @@ export default function CompletedTasks() {
   };
 
   useEffect(() => {
-    fetchTarefas();
+    loadUserIdFromLocalStorage();
   }, []);
+
+  useEffect(() => {
+    if (userId) {
+      fetchTarefas();
+    }
+  }, [userId]);
 
   if (loading) return <div className="p-4">Carregando tarefas...</div>;
   if (error) return <div className="p-4 text-red-500">Erro: {error}</div>;
 
   return (
     <div className="p-4">
-
       <Header title={'COMPLETED'} fetchTarefas={fetchTarefas} />
 
       {isOpen && (
@@ -114,7 +136,6 @@ export default function CompletedTasks() {
                 {tarefa.task_status ? 'active' : 'disabled'}
               </td>
               <td className="px-6 py-4 text-sm text-gray-600">
-                {/* {tarefa.data ? new Date(tarefa.data).toLocaleString() : 'Sem data'} */}
                 {tarefa.data
                   ? new Date(new Date(tarefa.data).getTime() + 3 * 60 * 60 * 1000).toLocaleString()
                   : 'Sem data'}

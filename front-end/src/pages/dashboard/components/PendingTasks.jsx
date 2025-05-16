@@ -16,12 +16,29 @@ export default function PendingTasks() {
   const [dados, setDados] = useState([]);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const { setPendingTarefasLength } = useContext(contextNumberTasks);
 
-  const fetchTarefas = async () => {
+  const loadUserIdFromLocalStorage = () => {
     try {
-      const response = await axios.get('http://localhost:3001/tarefas/?task_status=true');
+      const userString = localStorage.getItem('user');
+      if (!userString) return;
+
+      const user = JSON.parse(userString);
+      if (user?.userId) setUserId(user.userId);
+    } catch (error) {
+      console.log(`ERROR! Não foi possível buscar o id de usuário: ${error}`);
+    }
+  };
+
+  const fetchTarefas = async () => {
+    if (!userId) return;
+
+    setLoading(true);
+
+    try {
+      const response = await axios.get(`http://localhost:3001/tarefas/?user_id=${userId}&task_status=true`);
 
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
@@ -29,7 +46,6 @@ export default function PendingTasks() {
       } else {
         throw new Error("Formato de dados inválido");
       }
-
     } catch (error) {
       console.error("Erro ao buscar tarefas:", error);
       setError(error.message || "Erro ao carregar tarefas");
@@ -75,15 +91,20 @@ export default function PendingTasks() {
   };
 
   useEffect(() => {
-    fetchTarefas();
+    loadUserIdFromLocalStorage();
   }, []);
+
+  useEffect(() => {
+    if (userId) {
+      fetchTarefas();
+    }
+  }, [userId]);
 
   if (loading) return <div className="p-4">Carregando tarefas...</div>;
   if (error) return <div className="p-4 text-red-500">Erro: {error}</div>;
 
   return (
     <div className="p-4">
-
       <Header title={'PENDING'} fetchTarefas={fetchTarefas} />
 
       {isOpen && (
@@ -114,7 +135,6 @@ export default function PendingTasks() {
                 {tarefa.task_status ? 'active' : 'disabled'}
               </td>
               <td className="px-6 py-4 text-sm text-gray-600">
-                {/* {tarefa.data ? new Date(tarefa.data).toLocaleString() : 'Sem data'} */}
                 {tarefa.data
                   ? new Date(new Date(tarefa.data).getTime() + 3 * 60 * 60 * 1000).toLocaleString()
                   : 'Sem data'}
