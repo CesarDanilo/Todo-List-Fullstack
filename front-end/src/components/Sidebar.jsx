@@ -16,40 +16,49 @@ export default function Sidebar({ onSelect }) {
   } = useContext(contextNumberTasks);
 
   const [name, setName] = useState('');
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getUserName = () => {
-      try {
-        const userString = localStorage.getItem('user');
-        if (!userString) return;
+    const userString = localStorage.getItem('user');
+    if (!userString) return;
 
-        const user = JSON.parse(userString);
-        if (user?.name) setName(user.name);
-      } catch (error) {
-        console.error('Erro ao obter usuário do localStorage:', error);
-      }
-    };
+    try {
+      const user = JSON.parse(userString);
+      if (user?.name) setName(user.name);
+      if (user?.userId) setUserId(user.userId);
+    } catch (error) {
+      console.error('Erro ao obter usuário do localStorage:', error);
+    }
+  }, []);
 
-    const fetchTarefas = async () => {
+  useEffect(() => {
+    if (!userId) return; // aguarda o userId estar carregado
+
+    const atualizarContadoresGlobais = async () => {
       try {
-        const [all, pending, completed] = await Promise.all([
-          axios.get('http://localhost:3001/tarefas'),
-          axios.get('http://localhost:3001/tarefas/?task_status=true'),
-          axios.get('http://localhost:3001/tarefas/?task_status=false')
+        const [allRes, pendingRes, completedRes] = await Promise.all([
+          axios.get(`http://localhost:3001/tarefas/?user_id=${userId}`),
+          axios.get(`http://localhost:3001/tarefas/?user_id=${userId}&task_status=true`),   // pendentes
+          axios.get(`http://localhost:3001/tarefas/?user_id=${userId}&task_status=false`)  // completas
         ]);
 
-        setTarefasLength(all?.data?.data?.length || 0);
-        setPendingTarefasLength(pending?.data?.data?.length || 0);
-        setCompletedTarefasLength(completed?.data?.data?.length || 0);
+        const total = allRes.data.length;
+        const pendentes = pendingRes.data.length;
+        const completas = completedRes.data.length;
+
+        console.log({ total, pendentes, completas });
+
+        setTarefasLength(total);
+        setPendingTarefasLength(pendentes);
+        setCompletedTarefasLength(completas);
       } catch (error) {
         console.error('Erro ao buscar tarefas:', error);
       }
     };
 
-    getUserName();
-    fetchTarefas();
-  }, []);
+    atualizarContadoresGlobais();
+  }, [userId]); // só executa quando userId estiver disponível
 
   const handleItemClick = (item) => {
     setActiveItem(item);
@@ -57,13 +66,9 @@ export default function Sidebar({ onSelect }) {
   };
 
   const handleLogoutClick = () => {
-    try {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      navigate('/');
-    } catch (error) {
-      console.error('Erro ao tentar sair:', error);
-    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/');
   };
 
   return (
@@ -87,9 +92,7 @@ export default function Sidebar({ onSelect }) {
               className={`flex justify-between items-center cursor-pointer px-4 py-2 rounded-md transition-colors
                 ${activeItem === label
                   ? 'bg-[#1c1c1c] border-l-4 border-indigo-500 text-indigo-400 font-semibold'
-                  : 'hover:bg-[#1f1f1f] text-[#e5e5e5]'
-                }
-              `}
+                  : 'hover:bg-[#1f1f1f] text-[#e5e5e5]'}`}
             >
               <span>{label}</span>
               <span className="bg-[#2a2a2a] text-white rounded-full px-3 py-1 text-sm">
