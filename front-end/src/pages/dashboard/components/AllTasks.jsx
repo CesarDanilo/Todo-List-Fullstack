@@ -7,6 +7,7 @@ import DialogForm from '../../../components/DialogForm';
 import DialogDelete from '../../../components/DialogDelete';
 import { getTaskForId } from '../../../functions/getTaskForId';
 import { contextNumberTasks } from '../../../context/total_number_of_tasks';
+import Cards from '../../../components/Cards';
 
 export default function AllTasks() {
   const [tarefas, setTarefas] = useState([]);
@@ -104,6 +105,7 @@ export default function AllTasks() {
 
   return (
     <div className="p-4 bg-[#0f0f0f] text-gray-200 min-h-screen">
+      <Cards />
 
       <Header title={'ALL TASKS'} fetchTarefas={fetchTarefas} />
 
