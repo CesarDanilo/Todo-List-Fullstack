@@ -106,7 +106,7 @@ export default function PendingTasks() {
         <Cards title="Pending" value={pendingTarefasLength} />
       </div>
       <div className="max-w-5xl mx-auto px-4">
-        {/* <Header title={'COMPLETED TASKS'} fetchTarefas={fetchTarefas} /> */}
+        <Header title={'COMPLETED TASKS'} fetchTarefas={fetchTarefas} />
 
         {isOpen && <DialogForm setIsOpen={setIsOpen} fetchTarefas={fetchTarefas} dados={dados} />}
         {showDeleteDialog && <DialogDelete onConfirm={handleConfirmDelete} onCancel={handleCancelDelete} />}

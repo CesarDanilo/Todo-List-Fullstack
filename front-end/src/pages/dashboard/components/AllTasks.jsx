@@ -83,7 +83,7 @@ export default function AllTasks() {
 
       {/* Tabela de tarefas */}
       <div className="max-w-5xl mx-auto px-4">
-        {/* <Header title="ALL TASKS" fetchTarefas={() => { }} /> */}
+        <Header title="ALL TASKS" fetchTarefas={() => { }} />
 
         {isOpen && (
           <DialogForm
