@@ -83,7 +83,7 @@ export default function AllTasks() {
 
       {/* Tabela de tarefas */}
       <div className="max-w-5xl mx-auto px-4">
-        <Header title="ALL TASKS" fetchTarefas={() => { }} />
+        {/* <Header title="ALL TASKS" fetchTarefas={() => { }} /> */}
 
         {isOpen && (
           <DialogForm
@@ -111,7 +111,7 @@ export default function AllTasks() {
             </tr>
           </thead>
           <tbody>
-            {tarefas.map((t) => ( 
+            {tarefas.map((t) => (
               <tr
                 key={t.id}
                 className="bg-[#181818] hover:bg-[#212121] transition rounded"
