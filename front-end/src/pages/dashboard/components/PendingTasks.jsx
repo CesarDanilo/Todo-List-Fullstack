@@ -19,7 +19,7 @@ export default function PendingTasks() {
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
   const [userId, setUserId] = useState(null);
 
-  const { setPendingTarefasLength } = useContext(contextNumberTasks);
+  const { pendingTarefasLength, setPendingTarefasLength } = useContext(contextNumberTasks);
 
   const loadUserIdFromLocalStorage = () => {
     try {
@@ -103,7 +103,7 @@ export default function PendingTasks() {
   return (
     <div className="min-h-screen bg-[#101010] text-gray-200">
       <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-start p-6">
-        <Cards title="Pending" />
+        <Cards title="Pending" value={pendingTarefasLength} />
       </div>
       <div className="max-w-5xl mx-auto px-4">
         {/* <Header title={'COMPLETED TASKS'} fetchTarefas={fetchTarefas} /> */}

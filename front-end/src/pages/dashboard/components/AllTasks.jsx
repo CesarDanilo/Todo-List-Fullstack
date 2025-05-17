@@ -69,8 +69,8 @@ export default function AllTasks() {
 
   // Cálculo dinâmico dos cards
   const total = tarefas.length;
-  const pending = tarefas.filter((t) => !t.task_status).length;
-  const completed = tarefas.filter((t) => t.task_status).length;
+  const pending = tarefas.filter((t) => t.task_status).length;
+  const completed = tarefas.filter((t) => !t.task_status).length;
 
   return (
     <div className="min-h-screen bg-[#101010] text-gray-200">

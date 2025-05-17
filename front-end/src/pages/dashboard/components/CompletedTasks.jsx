@@ -20,8 +20,7 @@ export default function CompletedTasks() {
   const [userId, setUserId] = useState(null);
 
   const {
-    setTarefasLength,
-    setPendingTarefasLength,
+    completedTarefasLength,
     setCompletedTarefasLength
   } = useContext(contextNumberTasks);
 
@@ -107,7 +106,7 @@ export default function CompletedTasks() {
   return (
     <div className="min-h-screen bg-[#101010] text-gray-200">
       <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-start p-6">
-        <Cards title="Completed" />
+        <Cards title="Completed" value={completedTarefasLength} />
       </div>
       <div className="max-w-5xl mx-auto px-4">
         {/* <Header title={'COMPLETED TASKS'} fetchTarefas={fetchTarefas} /> */}
