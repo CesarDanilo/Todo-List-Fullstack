@@ -1,22 +1,22 @@
-# Usa uma imagem oficial do Node.js
+# Usa imagem base leve com Node.js
 FROM node:18-alpine
 
-# Cria e define o diretório de trabalho
+# Diretório de trabalho
 WORKDIR /app
 
-# Copia apenas os arquivos de dependência
-COPY package*.json .
+# Copia arquivos de dependências
+COPY package*.json ./
 
-# Instala as dependências
+# Instala dependências
 RUN npm install
 
-# Copia o restante da aplicação
+# Copia toda a aplicação (exceto arquivos ignorados)
 COPY . .
 
-# Expõe a porta da aplicação
+# Expõe a porta usada pela aplicação
 EXPOSE 3001
 
-# # Comando de inicialização
-# CMD sh -c "npx sequelize db:create --config src/database/config/config.js 2>/dev/null || true && \
-#            npx sequelize db:migrate --config src/database/config/config.js --migrations-path src/database/migrations && \
-#            npm run dev"
+# Comando de inicialização
+CMD sh -c "npx sequelize db:create --config src/database/config/config.js 2>/dev/null || true && \
+           npx sequelize db:migrate --config src/database/config/config.js --migrations-path src/database/migrations && \
+           npm run dev"
