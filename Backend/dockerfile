@@ -4,22 +4,19 @@ FROM node:18-alpine
 # Cria e define o diretório de trabalho
 WORKDIR /app
 
-# 1. Copia APENAS os arquivos de dependências primeiro (para melhor cache)
-COPY package.json . 
+# Copia apenas os arquivos de dependência
+COPY package.json .
 
-# Instala todas as dependências incluindo as de desenvolvimento
-RUN npm install 
+# Instala as dependências
+RUN npm install
 
-# 2. Copia o resto da aplicação (excluindo node_modules)
+# Copia o restante da aplicação
 COPY . .
-
-# Garante que o arquivo .env seja copiado (se existir)
-COPY .env ./
 
 # Expõe a porta da aplicação
 EXPOSE 3001
 
-# Comando de inicialização melhorado
+# Comando de inicialização
 CMD sh -c "npx sequelize db:create --config src/database/config/config.js 2>/dev/null || true && \
            npx sequelize db:migrate --config src/database/config/config.js --migrations-path src/database/migrations && \
            npm run dev"
