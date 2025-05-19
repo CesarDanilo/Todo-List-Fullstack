@@ -1,27 +1,33 @@
-# Usa uma imagem oficial do Node.js leve
+# Usa uma imagem oficial do Node.js
 FROM node:18-alpine
 
-# Define o diretório de trabalho dentro do container
+# Cria e define o diretório de trabalho
 WORKDIR /app
 
-# 1. Copia apenas os arquivos de dependências para cache eficiente
+# 1. Copia APENAS os arquivos de dependências primeiro (para melhor cache)
 COPY package*.json ./
 
-# 2. Instala as dependências conforme o package.json
-RUN npm install
+# Instala todas as dependências incluindo as de desenvolvimento
+RUN npm install && \
+    npm install --save \
+    sequelize \
+    sequelize-cli \
+    pg \
+    pg-hstore \
+    jsonwebtoken \
 
-# 3. Copia o restante da aplicação (exceto o que estiver no .dockerignore, como node_modules)
+    dotenv
+
+# 2. Copia o resto da aplicação (excluindo node_modules)
 COPY . .
 
-# 4. Copia o arquivo .env caso exista
-# Se você quiser garantir que o .env seja copiado, descomente a linha abaixo:
+# Garante que o arquivo .env seja copiado (se existir)
 # COPY .env ./
 
-# 5. Exponha a porta que sua aplicação irá rodar
+# Expõe a porta da aplicação
 EXPOSE 3001
 
-# 6. Comando para criar DB, rodar migrações e iniciar o servidor
-CMD sh -c "\
-  npx sequelize db:create --config src/database/config/config.js 2>/dev/null || true && \
-  npx sequelize db:migrate --config src/database/config/config.js --migrations-path src/database/migrations && \
-  npm run dev"
+# Comando de inicialização melhorado
+CMD sh -c "npx sequelize db:create --config src/database/config/config.js 2>/dev/null || true && \
+           npx sequelize db:migrate --config src/database/config/config.js --migrations-path src/database/migrations && \
+           npm run dev"
