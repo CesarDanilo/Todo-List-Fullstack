@@ -9,13 +9,6 @@ COPY package.json ./
 
 # Instala todas as dependências incluindo as de desenvolvimento
 RUN npm install 
-    sequelize \
-    sequelize-cli \
-    pg \
-    pg-hstore \
-    jsonwebtoken \
-
-    dotenv
 
 # 2. Copia o resto da aplicação (excluindo node_modules)
 COPY . .
