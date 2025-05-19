@@ -33,25 +33,24 @@ export default function AllTasks() {
   // Busca tarefas
   useEffect(() => {
     if (!userId) return;
-
-    const fetchTarefas = async () => {
-      setLoading(true);
-      try {
-        const { data } = await axios.get(
-          `http://localhost:3001/tarefas?user_id=${userId}`
-        );
-        const list = Array.isArray(data.data) ? data.data : [];
-        setTarefas(list);
-        setTarefasLength(list.length);
-      } catch (err) {
-        setError('Falha ao carregar tarefas');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchTarefas();
   }, [userId, setTarefasLength]);
+
+  const fetchTarefas = async () => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3001/tarefas?user_id=${userId}`
+      );
+      const list = Array.isArray(data.data) ? data.data : [];
+      setTarefas(list);
+      setTarefasLength(list.length);
+    } catch (err) {
+      setError('Falha ao carregar tarefas');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async (id) => {
     await deleteTasks(id);
@@ -83,12 +82,12 @@ export default function AllTasks() {
 
       {/* Tabela de tarefas */}
       <div className="max-w-5xl mx-auto px-4">
-        <Header title="ALL TASKS" fetchTarefas={() => { }} />
+        <Header title="ALL TASKS" fetchTarefas={() => { fetchTarefas() }} />
 
         {isOpen && (
           <DialogForm
             setIsOpen={setIsOpen}
-            fetchTarefas={() => { }}
+            fetchTarefas={() => { fetchTarefas() }}
             dados={dados}
           />
         )}
