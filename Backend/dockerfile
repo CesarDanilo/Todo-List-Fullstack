@@ -5,7 +5,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # 1. Copia APENAS os arquivos de dependências primeiro (para melhor cache)
-COPY ./package.json ./
+COPY ./package.json 
 
 # Instala todas as dependências incluindo as de desenvolvimento
 RUN npm install 
