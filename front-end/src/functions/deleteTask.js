@@ -1,7 +1,9 @@
 import axios from "axios";
 
 export const deleteTasks = async (id) => {
-    const url = 'http://localhost:3001/tarefas/';
+    const apiUrl = import.meta.env.VITE_API_URL_TASKS
+    
+    const url = `${apiUrl}tarefas/`;
     try {
         if (!id) { return console.log(`Erro no seu id: ${id}`) }
         const response = await axios.delete(url + id);

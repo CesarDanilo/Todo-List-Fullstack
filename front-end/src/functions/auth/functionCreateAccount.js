@@ -10,6 +10,8 @@ export default async function CreateAccount(data) {
     const nameValid = nameSchema.safeParse(data.name);
     const passwordValid = passwordSchema.safeParse(data.password);
 
+    const apiUrl = import.meta.env.VITE_API_URL_TASKS
+
     if (!emailValid.success || !nameValid.success || !passwordValid.success) {
         return {
             success: false,
@@ -23,7 +25,7 @@ export default async function CreateAccount(data) {
     }
 
     try {
-        const response = await axios.post("http://localhost:3001/usuarios/auth/register", {
+        const response = await axios.post(`${apiUrl}/usuarios/auth/register`, {
             username: data.name,
             email: data.email,
             password: data.password,

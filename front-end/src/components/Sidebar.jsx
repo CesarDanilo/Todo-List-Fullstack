@@ -19,6 +19,8 @@ export default function Sidebar({ onSelect }) {
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_API_URL_TASKS
+
   useEffect(() => {
     const userString = localStorage.getItem('user');
     if (!userString) return;
@@ -38,9 +40,9 @@ export default function Sidebar({ onSelect }) {
     const atualizarContadoresGlobais = async () => {
       try {
         const [allRes, pendingRes, completedRes] = await Promise.all([
-          axios.get(`http://localhost:3001/tarefas/?user_id=${userId}`),
-          axios.get(`http://localhost:3001/tarefas/?user_id=${userId}&task_status=true`),   // pendentes
-          axios.get(`http://localhost:3001/tarefas/?user_id=${userId}&task_status=false`)  // completas
+          axios.get(`${apiUrl}/tarefas/?user_id=${userId}`),
+          axios.get(`${apiUrl}/tarefas/?user_id=${userId}&task_status=true`),   // pendentes
+          axios.get(`${apiUrl}/tarefas/?user_id=${userId}&task_status=false`)  // completas
         ]);
 
         const total = allRes.data.length;

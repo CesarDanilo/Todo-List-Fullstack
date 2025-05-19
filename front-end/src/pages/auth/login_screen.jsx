@@ -76,8 +76,8 @@ export default function LoginScreen() {
                 {message && (
                     <div
                         className={`p-3 text-sm text-center rounded-lg ${message.includes('sucesso')
-                                ? 'bg-green-600/10 text-green-400'
-                                : 'bg-red-600/10 text-red-400'
+                            ? 'bg-green-600/10 text-green-400'
+                            : 'bg-red-600/10 text-red-400'
                             }`}
                     >
                         {message}
@@ -140,8 +140,8 @@ export default function LoginScreen() {
                         type="submit"
                         disabled={isLoading}
                         className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors ${isLoading
-                                ? 'bg-white/20 text-white/60 cursor-not-allowed'
-                                : 'bg-white text-black hover:bg-gray-200'
+                            ? 'bg-white/20 text-white/60 cursor-not-allowed'
+                            : 'bg-white text-black hover:bg-gray-200'
                             }`}
                     >
                         {isLoading ? (

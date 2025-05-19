@@ -9,6 +9,8 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
     const [active, setActive] = useState(false);
     const [userId, setUserId] = useState();
 
+    const apiUrl = import.meta.env.VITE_API_URL_TASKS
+
     useEffect(() => {
         if (dados) {
             setTitle(dados.title || '');
@@ -68,7 +70,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
             task_status: active
         };
         try {
-            await axios.put(`http://localhost:3001/tarefas/${dados.id}`, updatedData);
+            await axios.put(`${apiUrl}/tarefas/${dados.id}`, updatedData);
             fetchTarefas();
             setIsOpen(false);
         } catch (error) {

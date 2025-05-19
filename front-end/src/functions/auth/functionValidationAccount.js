@@ -9,12 +9,14 @@ export default async function validationAccount(data) {
     const emailValid = emailSchema.safeParse(data.email);
     const passwordValid = passwordSchema.safeParse(data.password);
 
+    const apiUrl = import.meta.env.VITE_API_URL_TASKS
+
     if (!emailValid.success || !passwordValid.success) {
         throw new Error("Formato de email ou senha inválido");
     }
 
     try {
-        const response = await axios.post('http://localhost:3001/usuarios/auth/login', data);
+        const response = await axios.post(`${apiUrl}usuarios/auth/login`, data);
 
         // Verificação mais robusta da resposta
         if (response.status === 200 && response.data?.token && response.data?.dados) {

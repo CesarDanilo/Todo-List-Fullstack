@@ -3,7 +3,8 @@
 import axios from "axios";
 
 export const registerTasks = async (taskData, id = null) => {
-    const url = 'http://localhost:3001';
+    const apiUrl = import.meta.env.VITE_API_URL_TASKS
+    const url = apiUrl;
     const path = id ? `/tarefas/${id}` : '/tarefas/create-task';
     try {
         if (!id) {
