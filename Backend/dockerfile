@@ -8,15 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instala todas as dependências incluindo as de desenvolvimento
-RUN npm install && \
-    npm install --save \
-    sequelize \
-    sequelize-cli \
-    pg \
-    pg-hstore \
-    jsonwebtoken \
-
-    dotenv
+RUN npm install 
 
 # 2. Copia o resto da aplicação (excluindo node_modules)
 COPY . .
