@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Garante que o arquivo .env seja copiado (se existir)
-# COPY .env ./
+COPY .env ./
 
 # Expõe a porta da aplicação
 EXPOSE 3001
