@@ -1,22 +1,27 @@
-# Usa uma imagem oficial do Node.js
+# Usa uma imagem oficial do Node.js leve
 FROM node:18-alpine
 
-# Cria e define o diretório de trabalho
+# Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia os arquivos de dependência
+# 1. Copia apenas os arquivos de dependências para cache eficiente
 COPY package*.json ./
 
-# Instala as dependências
+# 2. Instala as dependências conforme o package.json
 RUN npm install
 
-# Copia o restante do código
+# 3. Copia o restante da aplicação (exceto o que estiver no .dockerignore, como node_modules)
 COPY . .
 
-# Expõe a porta (ajuste se necessário)
+# 4. Copia o arquivo .env caso exista
+# Se você quiser garantir que o .env seja copiado, descomente a linha abaixo:
+# COPY .env ./
+
+# 5. Exponha a porta que sua aplicação irá rodar
 EXPOSE 3001
 
-# Comando para iniciar com migração automática
-CMD sh -c "npx sequelize db:create --config src/database/config/config.js 2>/dev/null || true && \
-           npx sequelize db:migrate --config src/database/config/config.js --migrations-path src/database/migrations && \
-           npm run dev"
+# 6. Comando para criar DB, rodar migrações e iniciar o servidor
+CMD sh -c "\
+  npx sequelize db:create --config src/database/config/config.js 2>/dev/null || true && \
+  npx sequelize db:migrate --config src/database/config/config.js --migrations-path src/database/migrations && \
+  npm run dev"
