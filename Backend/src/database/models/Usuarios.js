@@ -4,14 +4,14 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
     class Usuarios extends Model {
         static associate(models) {
-            // Users.hasMany(models.Pedido, { foreignKey: 'usuario_id' });
+            // associações podem ser definidas aqui
         }
     }
+
     Usuarios.init({
         id: {
             type: DataTypes.STRING(255),
             allowNull: false,
-            autoIncrement: true,
             primaryKey: true
         },
         username: {
@@ -26,17 +26,24 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(255),
             allowNull: false
         },
-        createdAt: {
-            type: DataTypes.DATE
+        created_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW
         },
-        updatedAt: {
-            type: DataTypes.DATE
+        updated_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW
         }
     }, {
         sequelize,
         modelName: 'Usuarios',
         tableName: 'usuarios',
-        timestamps: true // Habilita o gerenciamento automático de createdAt e updatedAt
+        timestamps: true,          // Habilita timestamps
+        createdAt: 'created_at',   // Mapeia createdAt para created_at
+        updatedAt: 'updated_at',   // Mapeia updatedAt para updated_at
+        underscored: true          // Converte automaticamente para snake_case
     });
 
     return Usuarios;
