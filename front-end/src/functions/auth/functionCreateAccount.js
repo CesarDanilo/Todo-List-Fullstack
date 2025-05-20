@@ -23,7 +23,7 @@ export default async function CreateAccount(data) {
             },
         };
     }
-
+    console.log(`LINK: ${apiUrl}/usuarios/auth/register`)
     try {
         const response = await axios.post(`${apiUrl}/usuarios/auth/register`, {
             username: data.name,
