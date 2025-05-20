@@ -20,7 +20,7 @@ const ControllerBuscarUsuarios = async (req, res, next) => {
 
         const result = await Usuarios.findAll({
             where,
-            attributes: ['id', 'username', 'email', 'createdAt', 'updatedAt']
+            attributes: ['id', 'username', 'email', 'createdAt', 'updatedat']
         })
 
         return res.status(200).json({
