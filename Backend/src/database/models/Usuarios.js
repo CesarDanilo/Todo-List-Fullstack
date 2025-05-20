@@ -26,12 +26,12 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(255),
             allowNull: false
         },
-        created_at: {
+        createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW
         },
-        updated_at: {
+        createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW
@@ -41,8 +41,8 @@ module.exports = (sequelize) => {
         modelName: 'Usuarios',
         tableName: 'usuarios',
         timestamps: true,          // Habilita timestamps
-        createdAt: 'created_at',   // Mapeia createdAt para created_at
-        updatedAt: 'updated_at',   // Mapeia updatedAt para updated_at
+        createdAt: 'createdAt',   // Mapeia createdAt para created_at
+        updatedAt: 'createdAt',   // Mapeia updatedAt para updated_at
         underscored: true          // Converte automaticamente para snake_case
     });
 
