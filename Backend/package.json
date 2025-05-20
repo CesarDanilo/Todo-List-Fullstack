@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server/index.js",
+    "migrate": "npx sequelize db:migrate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
