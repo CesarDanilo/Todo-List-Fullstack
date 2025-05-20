@@ -10,7 +10,7 @@ export default async function CreateAccount(data) {
     const nameValid = nameSchema.safeParse(data.name);
     const passwordValid = passwordSchema.safeParse(data.password);
 
-    const apiUrl = import.meta.env.VITE_API_URL_TASKS
+    const apiUrl = import.meta.env.VITE_API_URL
 
     if (!emailValid.success || !nameValid.success || !passwordValid.success) {
         return {

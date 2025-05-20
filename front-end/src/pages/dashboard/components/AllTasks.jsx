@@ -19,7 +19,7 @@ export default function AllTasks() {
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
   const [userId, setUserId] = useState();
 
-  const apiUrl = import.meta.env.VITE_API_URL_TASKS
+  const apiUrl = import.meta.env.VITE_API_URL
 
   const { setTarefasLength } = useContext(contextNumberTasks);
 
@@ -42,9 +42,8 @@ export default function AllTasks() {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        `${apiUrl}?user_id=${userId}`
+        `${apiUrl}/tarefas/?user_id=${userId}`
       );
-      console.log(`${apiUrl}?user_id=${userId}`)
       const list = Array.isArray(data.data) ? data.data : [];
       setTarefas(list);
       setTarefasLength(list.length);

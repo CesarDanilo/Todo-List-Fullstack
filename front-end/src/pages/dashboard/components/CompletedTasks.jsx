@@ -19,7 +19,7 @@ export default function CompletedTasks() {
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
   const [userId, setUserId] = useState(null);
 
-  const apiUrl = import.meta.env.VITE_API_URL_TASKS
+  const apiUrl = import.meta.env.VITE_API_URL
 
   const {
     completedTarefasLength,
@@ -43,7 +43,7 @@ export default function CompletedTasks() {
 
     try {
       setLoading(true);
-      const response = await axios.get(`${apiUrl}?user_id=${userId}&task_status=false`);
+      const response = await axios.get(`${apiUrl}/tarefas/?user_id=${userId}&task_status=false`);
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
         setCompletedTarefasLength(response.data.data.length);

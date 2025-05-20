@@ -9,7 +9,7 @@ export default async function validationAccount(data) {
     const emailValid = emailSchema.safeParse(data.email);
     const passwordValid = passwordSchema.safeParse(data.password);
 
-    const apiUrl = import.meta.env.VITE_API_URL_TASKS
+    const apiUrl = import.meta.env.VITE_API_URL
 
     if (!emailValid.success || !passwordValid.success) {
         throw new Error("Formato de email ou senha inválido");

@@ -19,7 +19,7 @@ export default function PendingTasks() {
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
   const [userId, setUserId] = useState(null);
 
-  const apiUrl = import.meta.env.VITE_API_URL_TASKS
+  const apiUrl = import.meta.env.VITE_API_URL
 
   const { pendingTarefasLength, setPendingTarefasLength } = useContext(contextNumberTasks);
 
@@ -40,7 +40,7 @@ export default function PendingTasks() {
 
     try {
       setLoading(true);
-      const response = await axios.get(`${apiUrl}/?user_id=${userId}&task_status=true`);
+      const response = await axios.get(`${apiUrl}/tarefas/?user_id=${userId}&task_status=true`);
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
         setPendingTarefasLength(response.data.data.length);

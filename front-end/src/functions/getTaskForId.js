@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getTaskForId = async (id) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL_TASKS
+      const apiUrl = import.meta.env.VITE_API_URL
     
       const response = await axios.get(`${apiUrl}/tarefas/?id=` + id);
   

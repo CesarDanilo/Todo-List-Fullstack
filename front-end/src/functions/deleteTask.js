@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const deleteTasks = async (id) => {
-    const apiUrl = import.meta.env.VITE_API_URL_TASKS
+    const apiUrl = import.meta.env.VITE_API_URL
     
     const url = `${apiUrl}tarefas/`;
     try {
