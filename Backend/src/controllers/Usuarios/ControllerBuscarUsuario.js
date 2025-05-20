@@ -12,7 +12,8 @@ const ControllerBuscarUsuarios = async (req, res) => {
 
         const result = await Usuarios.findAll({
             where,
-            attributes: ['id', 'username', 'email', 'createdAt', 'updatedAt']
+            attributes: ['id', 'username', 'email', 'created_at', 'updated_at'], // usar snake_case
+            order: [['created_at', 'DESC']] // corrigir ordenação
         });
 
         return res.status(200).json({ data: result });

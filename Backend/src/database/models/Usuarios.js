@@ -41,9 +41,9 @@ module.exports = (sequelize) => {
         modelName: 'Usuarios',
         tableName: 'usuarios',
         timestamps: true,          // Habilita timestamps
-        createdAt: 'createdAt',   // Mapeia createdAt para created_at
-        updatedAt: 'createdAt',   // Mapeia updatedAt para updated_at
-        underscored: true          // Converte automaticamente para snake_case
+        createdAt: 'created_at',   // Mapeia para a coluna correta
+        updatedAt: 'updated_at',   // Mapeia para a coluna correta
+        underscored: true        // Converte automaticamente para snake_case
     });
 
     return Usuarios;
