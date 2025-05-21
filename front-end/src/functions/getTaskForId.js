@@ -4,7 +4,7 @@ export const getTaskForId = async (id) => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL
     
-      const response = await axios.get(`${apiUrl}/tarefas/?id=` + id);
+      const response = await axios.get(`${apiUrl}tarefas/?id=` + id);
   
       if (response.data.data && Array.isArray(response.data.data)) {
         return response.data.data[0]; // ← Se for apenas 1 tarefa retornada
