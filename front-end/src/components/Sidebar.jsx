@@ -40,9 +40,9 @@ export default function Sidebar({ onSelect }) {
     const atualizarContadoresGlobais = async () => {
       try {
         const [allRes, pendingRes, completedRes] = await Promise.all([
-          axios.get(`${apiUrl}/tarefas/?user_id=${userId}`),
-          axios.get(`${apiUrl}/tarefas/?user_id=${userId}&task_status=true`),   // pendentes
-          axios.get(`${apiUrl}/tarefas/?user_id=${userId}&task_status=false`)  // completas
+          axios.get(`${apiUrl}tarefas/?user_id=${userId}`),
+          axios.get(`${apiUrl}tarefas/?user_id=${userId}&task_status=true`),   // pendentes
+          axios.get(`${apiUrl}tarefas/?user_id=${userId}&task_status=false`)  // completas
         ]);
 
         const total = allRes.data.length;
