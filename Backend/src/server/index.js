@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors')
 const port = 3001;
 const routes = require('../routes/routes')
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json())
 
@@ -17,6 +18,6 @@ app.get('/', (req, res) => {
     return res.status(200)
 })
 
-app.listen(port, '0.0.0.0', () => {
-  console.log(`SERVIDOR RODANDO: http://localhost:${port}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`SERVIDOR RODANDO: http://localhost:${PORT}`);
 });
