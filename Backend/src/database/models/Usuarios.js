@@ -40,10 +40,7 @@ module.exports = (sequelize) => {
         sequelize,
         modelName: 'Usuarios',
         tableName: 'usuarios',
-        timestamps: true,          // Habilita timestamps
-        createdAt: 'createdAt',   // Mapeia para a coluna correta
-        updatedAt: 'updatedAt',   // Mapeia para a coluna correta
-        underscored: true        // Converte automaticamente para snake_case
+        timestamps: true
     });
 
     return Usuarios;
