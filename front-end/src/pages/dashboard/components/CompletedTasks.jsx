@@ -43,7 +43,7 @@ export default function CompletedTasks() {
 
     try {
       setLoading(true);
-      const response = await axios.get(`${apiUrl}/tarefas/?user_id=${userId}&task_status=false`);
+      const response = await axios.get(`${apiUrl}tarefas/?user_id=${userId}&task_status=false`);
       if (response.data.data && Array.isArray(response.data.data)) {
         setTarefas(response.data.data);
         setCompletedTarefasLength(response.data.data.length);

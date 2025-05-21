@@ -40,9 +40,10 @@ export default function AllTasks() {
 
   const fetchTarefas = async () => {
     setLoading(true);
+    console.log(`LINK: ${apiUrl}tarefas/?user_id=${userId}`)
     try {
       const { data } = await axios.get(
-        `${apiUrl}/tarefas/?user_id=${userId}`
+        `${apiUrl}tarefas/?user_id=${userId}`
       );
       const list = Array.isArray(data.data) ? data.data : [];
       setTarefas(list);
