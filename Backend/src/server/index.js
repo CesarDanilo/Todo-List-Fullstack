@@ -17,6 +17,6 @@ app.get('/', (req, res) => {
     return res.status(200)
 })
 
-app.listen(port, () => {
-    console.log(`SERVIDOR RODANDO: http:/localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`SERVIDOR RODANDO: http://localhost:${port}`);
 });
