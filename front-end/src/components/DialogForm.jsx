@@ -9,7 +9,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
     const [active, setActive] = useState(false);
     const [userId, setUserId] = useState();
 
-    const apiUrl = import.meta.env.VITE_API_URL_TASKS
+    const apiUrl = import.meta.env.VITE_API_URL
 
     useEffect(() => {
         if (dados) {
