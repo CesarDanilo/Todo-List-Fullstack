@@ -31,7 +31,7 @@ export default function Dashboard() {
     }
 
     return (
-        <div className="flex h-screen">
+        <div className="flex flex-col md:flex-row h-screen">
             <contextNumberTasks.Provider
                 value={{
                     tarefasLength,
@@ -43,7 +43,7 @@ export default function Dashboard() {
                 }}
             >
                 <Sidebar onSelect={setSelectedItem} />
-                <MainContent selected={selectedItem} />
+                <MainContent className="flex-1 overflow-auto" selected={selectedItem} />
             </contextNumberTasks.Provider>
         </div>
     );

@@ -77,14 +77,14 @@ export default function AllTasks() {
   return (
     <div className="min-h-screen bg-[#101010] text-gray-200">
       {/* Cards resumo */}
-      <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-center py-6">
+      <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-center py-6 px-2">
         <Cards title="All Tasks" value={total} />
         <Cards title="Pending" value={pending} />
         <Cards title="Completed" value={completed} />
       </div>
 
       {/* Tabela de tarefas */}
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-5xl mx-auto px-2 sm:px-4">
         <Header title="ALL TASKS" fetchTarefas={() => { fetchTarefas() }} />
 
         {isOpen && (
@@ -104,55 +104,50 @@ export default function AllTasks() {
           />
         )}
 
-        <table className="w-full table-auto border-separate border-spacing-y-2">
-          <thead>
-            <tr className="text-xs text-gray-400 uppercase">
-              {['Title', 'Descrição', 'Status', 'Data & Hora'].map((h) => (
-                <th key={h} className="text-left py-2">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {tarefas.map((t) => (
-              <tr
-                key={t.id}
-                className="bg-[#181818] hover:bg-[#212121] transition rounded"
-              >
-                <td className="px-3 py-2">{t.title || '—'}</td>
-                <td className="px-3 py-2 text-gray-400">
-                  {t.task_description || '—'}
-                </td>
-                <td className="px-3 py-2">
-                  <span
-                    className={`text-sm font-medium ${t.task_status ? 'text-green-400' : 'text-red-500'
-                      }`}
-                  >
-                    {t.task_status ? 'Active' : 'Disabled'}
-                  </span>
-                </td>
-                <td className="px-3 py-2 text-gray-400">
-                  {t.data
-                    ? new Date(t.data).toLocaleString()
-                    : '—'}
-                </td>
-                <td className="px-3 py-2 flex space-x-2 justify-end">
-                  <ActionsButtons
-                    type="Edit"
-                    onClick={() => handleEdit(t.id)}
-                  />
-                  <ActionsButtons
-                    type="Delete"
-                    onClick={() => {
-                      setTarefaParaDeletar(t);
-                      setShowDeleteDialog(true);
-                    }}
-                  />
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full table-auto border-separate border-spacing-y-2 text-sm sm:text-base">
+            <thead>
+              <tr className="text-xs text-gray-400 uppercase">
+                {['Title', 'Descrição', 'Status', 'Data & Hora', 'Ações'].map((h) => (
+                  <th key={h} className="text-left py-2 whitespace-nowrap px-3">{h}</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {tarefas.map((t) => (
+                <tr
+                  key={t.id}
+                  className="bg-[#181818] hover:bg-[#212121] transition rounded"
+                >
+                  <td className="px-3 py-2 whitespace-nowrap">{t.title || '—'}</td>
+                  <td className="px-3 py-2 text-gray-400">{t.task_description || '—'}</td>
+                  <td className="px-3 py-2">
+                    <span
+                      className={`text-sm font-medium ${t.task_status ? 'text-green-400' : 'text-red-500'}`}
+                    >
+                      {t.task_status ? 'Active' : 'Disabled'}
+                    </span>
+                  </td>
+                  <td className="px-3 py-2 text-gray-400 whitespace-nowrap">
+                    {t.data ? new Date(t.data).toLocaleString() : '—'}
+                  </td>
+                  <td className="px-3 py-2 flex space-x-2 justify-end">
+                    <ActionsButtons type="Edit" onClick={() => handleEdit(t.id)} />
+                    <ActionsButtons
+                      type="Delete"
+                      onClick={() => {
+                        setTarefaParaDeletar(t);
+                        setShowDeleteDialog(true);
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+
   );
 }

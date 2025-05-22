@@ -74,15 +74,15 @@ export default function Sidebar({ onSelect }) {
   };
 
   return (
-    <div className="w-[350px] p-10 bg-[#0f0f0f] text-[#e5e5e5] font-sans flex flex-col justify-between h-screen">
-      {/* Logo */}
-      <div className="mb-12 flex justify-center">
-        <img src={logo} alt="Logo" className="w-[150px] h-auto" />
+    <div className="w-full md:w-[350px] p-3 md:p-6 bg-[#0f0f0f] text-[#e5e5e5] font-sans flex flex-col justify-between ">
+      {/* Logo - Reduzido e com menos margem */}
+      <div className="mb-4 md:mb-6 flex justify-center">
+        <img src={logo} alt="Logo" className="w-[80px] md:w-[110px] h-auto" />
       </div>
 
-      {/* Navegação */}
-      <nav className="mb-12">
-        <ul className="space-y-4">
+      {/* Navegação - Mais compacta */}
+      <nav className="mb-4 md:mb-6">
+        <ul className="space-y-1 md:space-y-2">
           {[
             { label: 'ALL TASKS', count: tarefasLength },
             { label: 'PENDING', count: pendingTarefasLength },
@@ -91,13 +91,13 @@ export default function Sidebar({ onSelect }) {
             <li
               key={label}
               onClick={() => handleItemClick(label)}
-              className={`flex justify-between items-center cursor-pointer px-4 py-2 rounded-md transition-colors
-                ${activeItem === label
+              className={`flex justify-between items-center cursor-pointer px-2 py-1 md:px-3 md:py-1.5 rounded-md transition-colors
+            ${activeItem === label
                   ? 'bg-[#1c1c1c] border-l-4 border-indigo-500 text-indigo-400 font-semibold'
                   : 'hover:bg-[#1f1f1f] text-[#e5e5e5]'}`}
             >
-              <span>{label}</span>
-              <span className="bg-[#2a2a2a] text-white rounded-full px-3 py-1 text-sm">
+              <span className="text-xs md:text-sm">{label}</span>
+              <span className="bg-[#2a2a2a] text-white rounded-full px-1.5 py-0.5 md:px-2 md:py-0.5 text-xs">
                 {count}
               </span>
             </li>
@@ -105,17 +105,17 @@ export default function Sidebar({ onSelect }) {
         </ul>
       </nav>
 
-      {/* Rodapé */}
-      <footer className="text-[#e5e5e5] font-semibold text-lg flex justify-between items-center">
+      {/* Rodapé - Mais compacto */}
+      <footer className="text-[#e5e5e5] font-medium text-sm md:text-base flex justify-between items-center">
         <span>{name || 'Usuário'}</span>
         <button
           onClick={handleLogoutClick}
-          className="p-2 rounded hover:bg-[#1f1f1f] transition-colors"
+          className="p-1 rounded hover:bg-[#1f1f1f] transition-colors"
           aria-label="Logout"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6"
+            className="w-4 h-4 md:w-5 md:h-5"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
