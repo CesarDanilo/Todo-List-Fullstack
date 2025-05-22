@@ -70,7 +70,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
             task_status: active
         };
         try {
-            await axios.put(`${apiUrl}/tarefas/${dados.id}`, updatedData);
+            await axios.put(`${apiUrl}tarefas/${dados.id}`, updatedData);
             fetchTarefas();
             setIsOpen(false);
         } catch (error) {
