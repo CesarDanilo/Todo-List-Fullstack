@@ -8,6 +8,7 @@ import DialogDelete from '../../../components/DialogDelete';
 import { getTaskForId } from '../../../functions/getTaskForId';
 import { contextNumberTasks } from '../../../context/total_number_of_tasks';
 import Cards from '../../../components/Cards';
+import DialogNotification from '../../../components/DialogNotification';
 
 export default function AllTasks() {
   const [tarefas, setTarefas] = useState([]);
@@ -76,6 +77,12 @@ export default function AllTasks() {
 
   return (
     <div className="min-h-screen bg-[#101010] text-gray-200">
+      <DialogNotification
+        task={{ title: "Reunião com equipe" }}
+        show={true} // altere esse estado conforme a lógica da tarefa
+        onClose={() => setShowModal(false)}
+      />
+
       {/* Cards resumo */}
       <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-center py-6 px-2">
         <Cards title="All Tasks" value={total} />
