@@ -17,8 +17,10 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
             setDescription(dados.task_description || '');
             if (dados.data) {
                 const localDateTime = new Date(dados.data);
-                const offset = localDateTime.getTimezoneOffset();
+                // const offset = localDateTime.getTimezoneOffset();
+                // localDateTime.setMinutes(localDateTime.getMinutes() - offset);
                 localDateTime.setMinutes(localDateTime.getMinutes() - offset);
+                // localDateTime.setHours(localDateTime.getHours() + 3);
                 localDateTime.setHours(localDateTime.getHours() + 3);
                 setDate(localDateTime.toISOString().slice(0, 16));
             } else {
