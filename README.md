@@ -19,10 +19,10 @@
 
 ---
 
-## Interface (em desenvolvimento)
+## Homepage
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/cb9b3f5f-e3c8-40ca-b799-f2f71b0fbf76" alt="Preview da Interface" width="600"/>
+  <img src="https://github.com/user-attachments/assets/d533976a-3356-4dfe-8d2a-ad4f7557e64d" alt="Preview da Interface" width="600"/>
 </p>
 
 <p align="center"><em>*Design provisório*</em></p>
