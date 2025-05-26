@@ -19,7 +19,7 @@ export default function CompletedTasks() {
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
   const [userId, setUserId] = useState(null);
 
-  const apiUrl = import.meta.env.VITE_API_URL
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const {
     completedTarefasLength,
@@ -146,8 +146,7 @@ export default function CompletedTasks() {
                   className="bg-[#181818] hover:bg-[#212121] transition rounded"
                 >
                   <td className="px-3 py-2 whitespace-nowrap">{t.title || '—'}</td>
-                  <td className="px-3 py-2 text-gray-400">{t.task_description || '—'}
-                  </td>
+                  <td className="px-3 py-2 text-gray-400">{t.task_description || '—'}</td>
                   <td className="px-3 py-2">
                     <span
                       className={`text-sm font-medium ${t.task_status ? 'text-green-400' : 'text-red-500'}`}
@@ -161,7 +160,7 @@ export default function CompletedTasks() {
                   <td className="px-3 py-2 flex space-x-2 justify-end">
                     <ActionsButtons
                       type="Edit"
-                      onClick={() => handleEdit(t.id)}
+                      onClick={() => handleUpdateTask(t.id)}
                     />
                     <ActionsButtons
                       type="Delete"
