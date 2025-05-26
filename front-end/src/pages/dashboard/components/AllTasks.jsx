@@ -19,6 +19,7 @@ export default function AllTasks() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
   const [userId, setUserId] = useState();
+  const [show, setShowModal] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL
 
