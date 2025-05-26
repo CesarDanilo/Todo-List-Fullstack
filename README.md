@@ -1,82 +1,86 @@
 <p align="center">
-  <img src='https://github.com/user-attachments/assets/f88bbf98-0508-40ae-91c6-533e4ccc314a' alt="Todo List Logo" width="150" /> 
+  <img src="https://github.com/user-attachments/assets/f88bbf98-0508-40ae-91c6-533e4ccc314a" alt="Todo List Logo" width="150" />
 </p>
+
+<h2 align="center">Lista de Tarefas</h2>
 
 <p align="center">
-  <strong>Lista de Tarefas</strong> com autenticação JWT, histórico de exclusão e interface moderna. <br />
-  Desenvolvida com <strong>Node.js</strong> e <strong>React.js</strong>, seguindo o padrão <strong>MVC</strong> e com <strong>design responsivo</strong>.
+  Aplicação fullstack com autenticação JWT, histórico de exclusão e interface responsiva.<br />
+  Desenvolvida com <strong>Node.js</strong>, <strong>React.js</strong> e <strong>Tailwind CSS</strong>.
 </p>
 
 ---
 
-## Funcionalidades
-
-- Autenticação via JWT  
-- CRUD completo de tarefas  
-- Histórico de exclusões  
-- Contador por status (pendentes, concluídas, lixeira)  
-- Interface minimalista e responsiva  
-
----
-
-## Homepage
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/d533976a-3356-4dfe-8d2a-ad4f7557e64d" alt="Preview da Interface" width="600"/>
-</p>
-
-<p align="center"><em>*Design provisório*</em></p>
-
----
-
-## Paleta de Cores
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/01ac0d2a-c7dc-4808-ae83-e717159fbdb8" alt="Paleta de Cores" width="600"/>
-</p>
-
----
+## 🖥️ Interface
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/d533976a-3356-4dfe-8d2a-ad4f7557e64d" alt="Preview 1" width="600"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/19df8fc6-9fa7-4bd7-93b0-6e7fb13a8222" alt="Preview 2" width="600"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/91e7665f-5475-441e-b8ec-c9481b2ca113" alt="Preview 3" width="600"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/8519c5eb-71a2-4e07-993f-e171c0a81b78" alt="Preview 4" width="600"/>
+    </td>
+  </tr>
+</table>
 
 ## ⚙️ Tecnologias
 
 ### Backend
-- Node.js + Express  
-- Sequelize + PostgreSQL  
-- JWT  
-- Docker  
-- Padrão MVC + API REST  
+- Node.js + Express
+- Sequelize + PostgreSQL
+- JWT
+- Docker
+- Padrão MVC + API REST
 
 ### Frontend
-- React.js  
-- Tailwind CSS  
-- React Router DOM  
+- React.js
+- Tailwind CSS
+- React Router DOM
 
 ### Utilitários
-- bcrypt  
-- dotenv  
-- cors  
+- bcrypt
+- dotenv
+- cors
+
+---
+  
+## ✅ Funcionalidades
+
+- Autenticação com JWT  
+- CRUD completo de tarefas  
+- Histórico de exclusões  
+- Contador por status (pendentes, concluídas, lixeira)  
+- Interface moderna, minimalista e responsiva  
 
 ---
 
 ## 🔐 Autenticação
 
-- Geração e verificação de tokens JWT  
+- Geração e validação de tokens JWT  
 - Middleware para proteger rotas  
-- Identificação de usuário via token  
+- Identificação segura de usuário via token  
 - Armazenamento seguro no frontend  
 
 ---
 
 ## 📦 Endpoints REST
 
-| Método | Rota             | Descrição                     |
-|--------|------------------|-------------------------------|
-| POST   | `/auth/register` | Cadastro de usuário           |
-| POST   | `/auth/login`    | Login do usuário              |
-| GET    | `/tarefas`       | Listar tarefas                |
-| POST   | `/tarefas`       | Criar nova tarefa             |
-| PUT    | `/tarefas/:id`   | Atualizar tarefa              |
-| DELETE | `/tarefas/:id`   | Mover para histórico          |
-| GET    | `/historico`     | Ver tarefas excluídas         |
+| Método | Rota             | Descrição            |
+|--------|------------------|----------------------|
+| POST   | `/auth/register` | Cadastro de usuário  |
+| POST   | `/auth/login`    | Login do usuário     |
+| GET    | `/tarefas`       | Listar tarefas       |
+| POST   | `/tarefas`       | Criar nova tarefa    |
+| PUT    | `/tarefas/:id`   | Atualizar tarefa     |
+| DELETE | `/tarefas/:id`   | Mover para histórico |
 
 ---
+
