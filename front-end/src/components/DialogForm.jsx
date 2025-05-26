@@ -9,7 +9,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
     const [active, setActive] = useState(false);
     const [userId, setUserId] = useState();
 
-    const apiUrl = import.meta.env.VITE_API_URL
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         if (dados) {
@@ -17,12 +17,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
             setDescription(dados.task_description || '');
             if (dados.data) {
                 const localDateTime = new Date(dados.data);
-                // const offset = localDateTime.getTimezoneOffset();
-                // localDateTime.setMinutes(localDateTime.getMinutes() - offset);
-                localDateTime.setMinutes(localDateTime.getMinutes() - offset);
-                // localDateTime.setHours(localDateTime.getHours() + 3);
-                localDateTime.setHours(localDateTime.getHours() + 3);
-                setDate(localDateTime.toISOString().slice(0, 16));
+                setDate(localDateTime.toISOString().slice(0, 16)); // Corrigido: sem alterar fuso
             } else {
                 setDate('');
             }
@@ -37,7 +32,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
 
     useEffect(() => {
         loadUserIdFromLocalStorage();
-    }, [])
+    }, []);
 
     const loadUserIdFromLocalStorage = () => {
         try {
@@ -72,7 +67,6 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
             task_status: active
         };
         try {
-            console.log(`LINK DO EDIT: ${apiUrl}tarefas/${dados.id}`)
             await axios.put(`${apiUrl}tarefas/${dados.id}`, updatedData);
             fetchTarefas();
             setIsOpen(false);
