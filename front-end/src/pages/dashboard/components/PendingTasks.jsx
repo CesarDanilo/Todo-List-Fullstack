@@ -8,6 +8,7 @@ import DialogDelete from '../../../components/DialogDelete';
 import { getTaskForId } from '../../../functions/getTaskForId';
 import { contextNumberTasks } from '../../../context/total_number_of_tasks';
 import Cards from '../../../components/Cards';
+import DialogNotification from '../../../components/DialogNotification';  // Importa o componente de notificação
 
 export default function PendingTasks() {
   const [tarefas, setTarefas] = useState([]);
@@ -19,7 +20,11 @@ export default function PendingTasks() {
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
   const [userId, setUserId] = useState(null);
 
-  const apiUrl = import.meta.env.VITE_API_URL
+  // Estados para notificação
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationData, setNotificationData] = useState(null);
+
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const { pendingTarefasLength, setPendingTarefasLength } = useContext(contextNumberTasks);
 
@@ -42,8 +47,29 @@ export default function PendingTasks() {
       setLoading(true);
       const response = await axios.get(`${apiUrl}tarefas/?user_id=${userId}&task_status=true`);
       if (response.data.data && Array.isArray(response.data.data)) {
-        setTarefas(response.data.data);
-        setPendingTarefasLength(response.data.data.length);
+        const tasks = response.data.data;
+        setTarefas(tasks);
+        setPendingTarefasLength(tasks.length);
+
+        // Verifica se alguma tarefa está próxima do horário atual (<= 1 minuto)
+        const now = new Date();
+        const tarefaProxima = tasks.find(t => {
+          if (!t.data) return false;
+
+          const dataTarefa = new Date(t.data);
+          const diffInMs = Math.abs(dataTarefa - now);
+          const diffInMin = diffInMs / 1000 / 60;
+
+          return diffInMin <= 1;
+        });
+
+        if (tarefaProxima) {
+          setNotificationData(tarefaProxima);
+          setShowNotification(true);
+        } else {
+          setShowNotification(false);
+          setNotificationData(null);
+        }
       } else {
         throw new Error("Formato de dados inválido");
       }
@@ -104,11 +130,20 @@ export default function PendingTasks() {
 
   return (
     <div className="min-h-screen bg-[#101010] text-gray-200">
+      {/* Notificação */}
+      {showNotification && notificationData && (
+        <DialogNotification
+          task={notificationData}
+          show={showNotification}
+          onClose={() => setShowNotification(false)}
+        />
+      )}
+
       <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-start p-6">
         <Cards title="Pending" value={pendingTarefasLength} />
       </div>
       <div className="max-w-5xl mx-auto px-4">
-        <Header title={'COMPLETED TASKS'} fetchTarefas={fetchTarefas} />
+        <Header title={'PENDING TASKS'} fetchTarefas={fetchTarefas} />
 
         {isOpen && <DialogForm setIsOpen={setIsOpen} fetchTarefas={fetchTarefas} dados={dados} />}
         {showDeleteDialog && <DialogDelete onConfirm={handleConfirmDelete} onCancel={handleCancelDelete} />}
@@ -133,9 +168,7 @@ export default function PendingTasks() {
                     {t.task_description || '—'}
                   </td>
                   <td className="px-3 py-2">
-                    <span
-                      className={`text-xs sm:text-sm font-medium ${t.task_status ? 'text-green-400' : 'text-red-500'}`}
-                    >
+                    <span className={`text-xs sm:text-sm font-medium ${t.task_status ? 'text-green-400' : 'text-red-500'}`}>
                       {t.task_status ? 'Active' : 'Disabled'}
                     </span>
                   </td>
@@ -145,14 +178,11 @@ export default function PendingTasks() {
                   <td className="px-3 py-2 flex space-x-2 justify-end">
                     <ActionsButtons
                       type="Edit"
-                      onClick={() => handleEdit(t.id)}
+                      onClick={() => handleUpdateTask(t.id)}
                     />
                     <ActionsButtons
                       type="Delete"
-                      onClick={() => {
-                        setTarefaParaDeletar(t);
-                        setShowDeleteDialog(true);
-                      }}
+                      onClick={() => handleClickDelete(t)}
                     />
                   </td>
                 </tr>
@@ -160,7 +190,6 @@ export default function PendingTasks() {
             </tbody>
           </table>
         </div>
-
       </div>
     </div>
   );
