@@ -17,8 +17,8 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
             setDescription(dados.task_description || '');
             if (dados.data) {
                 const localDateTime = new Date(dados.data);
-                localDateTime.setHours(localDateTime.getHours() + 3);
-                setDate(localDateTime.toISOString().slice(0, 16)); // Corrigido: sem alterar fuso
+                const offsetDateTime = new Date(localDateTime.getTime() - localDateTime.getTimezoneOffset() * 60000);
+                setDate(offsetDateTime.toISOString().slice(0, 16));
             } else {
                 setDate('');
             }
@@ -51,7 +51,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
             user_id: userId,
             title,
             task_description: description,
-            data: date,
+            data: new Date(date).toISOString(),
             task_status: active
         };
         if (await registerTasks(taskData)) {
@@ -64,7 +64,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
         const updatedData = {
             title,
             task_description: description,
-            data: date,
+            data: new Date(date).toISOString(),
             task_status: active
         };
         try {
