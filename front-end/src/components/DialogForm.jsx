@@ -17,6 +17,7 @@ export default function DialogForm({ setIsOpen, fetchTarefas, dados }) {
             setDescription(dados.task_description || '');
             if (dados.data) {
                 const localDateTime = new Date(dados.data);
+                localDateTime.setHours(localDateTime.getHours() + 3);
                 setDate(localDateTime.toISOString().slice(0, 16)); // Corrigido: sem alterar fuso
             } else {
                 setDate('');
