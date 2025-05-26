@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import Header from '../../../components/Header';
 import ActionsButtons from '../../../components/ActionsButtons';
 import { deleteTasks } from '../../../functions/deleteTask';
@@ -19,10 +19,13 @@ export default function AllTasks() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
   const [userId, setUserId] = useState();
-  const [show, setShowModal] = useState(false); // Corrigido: controle real de exibição da notificação
+  const [show, setShowModal] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const { setTarefasLength } = useContext(contextNumberTasks);
+
+  // Ref para evitar múltiplas notificações da mesma tarefa
+  const notifiedTaskIds = useRef(new Set());
 
   // Carrega o ID do usuário
   useEffect(() => {
@@ -33,48 +36,70 @@ export default function AllTasks() {
     }
   }, []);
 
-  // Busca tarefas
+  // Busca tarefas e cria intervalo para checar notificações
   useEffect(() => {
     if (!userId) return;
+
     fetchTarefas();
-  }, [userId, setTarefasLength]);
+
+    const interval = setInterval(() => {
+      checkForNotification(tarefas);
+    }, 30000); // verifica a cada 30 segundos
+
+    return () => clearInterval(interval);
+  }, [userId, tarefas]);
 
   const fetchTarefas = async () => {
     setLoading(true);
-    console.log(`LINK: ${apiUrl}tarefas/?user_id=${userId}`);
     try {
       const { data } = await axios.get(`${apiUrl}tarefas/?user_id=${userId}`);
       const list = Array.isArray(data.data) ? data.data : [];
       setTarefas(list);
       setTarefasLength(list.length);
 
-      // ✅ Exibe notificação se houver pelo menos uma tarefa pendente
-      const now = new Date();
-      const compromisso = list.find((t) => {
-        if (!t.task_status || !t.data) return false;
-
-        const dataTarefa = new Date(t.data);
-        const diffInMs = Math.abs(dataTarefa - now);
-        const diffInMin = diffInMs / 1000 / 60;
-
-        return diffInMin <= 1; // está dentro de 1 minuto da hora marcada
+      // Limpa o histórico de notificações para tarefas que não estão mais na lista
+      notifiedTaskIds.current.forEach((id) => {
+        if (!list.find((t) => t.id === id)) {
+          notifiedTaskIds.current.delete(id);
+        }
       });
 
-      if (compromisso) {
-        setShowModal(true);
-        // se quiser mostrar qual tarefa está marcada para agora:
-        setDados(compromisso);
-      }
+      setLoading(false);
     } catch (err) {
       setError('Falha ao carregar tarefas');
-    } finally {
       setLoading(false);
+    }
+  };
+
+  // Função que verifica se tem tarefa no momento exato para mostrar notificação
+  const checkForNotification = (tarefasList) => {
+    const now = new Date();
+
+    const compromisso = tarefasList.find((t) => {
+      if (!t.task_status || !t.data) return false;
+
+      const dataTarefa = new Date(t.data);
+      const diffInMs = dataTarefa - now;
+      const diffInMin = diffInMs / 1000 / 60;
+
+      // Verifica se a tarefa está entre 0 e 1 minuto a partir de agora
+      const notNotifiedYet = !notifiedTaskIds.current.has(t.id);
+
+      return diffInMin >= 0 && diffInMin <= 1 && notNotifiedYet;
+    });
+
+    if (compromisso) {
+      notifiedTaskIds.current.add(compromisso.id);
+      setDados(compromisso);
+      setShowModal(true);
     }
   };
 
   const handleDelete = async (id) => {
     await deleteTasks(id);
     setTarefas((prev) => prev.filter((t) => t.id !== id));
+    // Remove do set de notificações para evitar vazamento de memória
+    notifiedTaskIds.current.delete(id);
   };
 
   const handleEdit = async (id) => {
