@@ -49,9 +49,21 @@ export default function AllTasks() {
       setTarefasLength(list.length);
 
       // ✅ Exibe notificação se houver pelo menos uma tarefa pendente
-      const hasPending = list.some(t => t.task_status);
-      if (hasPending) {
+      const now = new Date();
+      const compromisso = list.find((t) => {
+        if (!t.task_status || !t.data) return false;
+
+        const dataTarefa = new Date(t.data);
+        const diffInMs = Math.abs(dataTarefa - now);
+        const diffInMin = diffInMs / 1000 / 60;
+
+        return diffInMin <= 1; // está dentro de 1 minuto da hora marcada
+      });
+
+      if (compromisso) {
         setShowModal(true);
+        // se quiser mostrar qual tarefa está marcada para agora:
+        setDados(compromisso);
       }
     } catch (err) {
       setError('Falha ao carregar tarefas');
