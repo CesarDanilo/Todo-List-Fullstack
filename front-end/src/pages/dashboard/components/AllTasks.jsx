@@ -19,10 +19,9 @@ export default function AllTasks() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [tarefaParaDeletar, setTarefaParaDeletar] = useState(null);
   const [userId, setUserId] = useState();
-  const [show, setShowModal] = useState(false);
+  const [show, setShowModal] = useState(false); // Corrigido: controle real de exibição da notificação
 
-  const apiUrl = import.meta.env.VITE_API_URL
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const { setTarefasLength } = useContext(contextNumberTasks);
 
   // Carrega o ID do usuário
@@ -42,14 +41,18 @@ export default function AllTasks() {
 
   const fetchTarefas = async () => {
     setLoading(true);
-    console.log(`LINK: ${apiUrl}tarefas/?user_id=${userId}`)
+    console.log(`LINK: ${apiUrl}tarefas/?user_id=${userId}`);
     try {
-      const { data } = await axios.get(
-        `${apiUrl}tarefas/?user_id=${userId}`
-      );
+      const { data } = await axios.get(`${apiUrl}tarefas/?user_id=${userId}`);
       const list = Array.isArray(data.data) ? data.data : [];
       setTarefas(list);
       setTarefasLength(list.length);
+
+      // ✅ Exibe notificação se houver pelo menos uma tarefa pendente
+      const hasPending = list.some(t => t.task_status);
+      if (hasPending) {
+        setShowModal(true);
+      }
     } catch (err) {
       setError('Falha ao carregar tarefas');
     } finally {
@@ -71,7 +74,6 @@ export default function AllTasks() {
   if (loading) return <div className="p-6 text-gray-400">Carregando...</div>;
   if (error) return <div className="p-6 text-red-500">{error}</div>;
 
-  // Cálculo dinâmico dos cards
   const total = tarefas.length;
   const pending = tarefas.filter((t) => t.task_status).length;
   const completed = tarefas.filter((t) => !t.task_status).length;
@@ -79,29 +81,28 @@ export default function AllTasks() {
   return (
     <div className="min-h-screen bg-[#101010] text-gray-200">
       <DialogNotification
-        task={{ title: "Reunião com equipe" }}
-        show={true} // altere esse estado conforme a lógica da tarefa
+        task={{ title: "Você tem tarefas pendentes!" }}
+        show={show}
         onClose={() => setShowModal(false)}
       />
 
-      {/* Cards resumo */}
       <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-center py-6 px-2">
         <Cards title="All Tasks" value={total} />
         <Cards title="Pending" value={pending} />
         <Cards title="Completed" value={completed} />
       </div>
 
-      {/* Tabela de tarefas */}
       <div className="max-w-5xl mx-auto px-2 sm:px-4">
-        <Header title="ALL TASKS" fetchTarefas={() => { fetchTarefas() }} />
+        <Header title="ALL TASKS" fetchTarefas={fetchTarefas} />
 
         {isOpen && (
           <DialogForm
             setIsOpen={setIsOpen}
-            fetchTarefas={() => { fetchTarefas() }}
+            fetchTarefas={fetchTarefas}
             dados={dados}
           />
         )}
+
         {showDeleteDialog && (
           <DialogDelete
             onConfirm={() => {
