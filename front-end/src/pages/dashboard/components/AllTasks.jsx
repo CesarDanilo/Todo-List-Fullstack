@@ -9,6 +9,7 @@ import { getTaskForId } from '../../../functions/getTaskForId';
 import { contextNumberTasks } from '../../../context/total_number_of_tasks';
 import Cards from '../../../components/Cards';
 import DialogNotification from '../../../components/DialogNotification';
+import CardsGraficos from '../../../components/CardsGraficos';
 
 export default function AllTasks() {
   const [tarefas, setTarefas] = useState([]);
@@ -98,10 +99,10 @@ export default function AllTasks() {
         onClose={() => setShowModal(false)}
       />
 
-      <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-center py-6 px-2">
+      <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-center sm:justify-start py-6 px-2 sm:px-4">
         <Cards title="All Tasks" value={total} />
-        <Cards title="Pending" value={pending} />
-        <Cards title="Completed" value={completed} />
+        {/* <Cards title="Pending" value={pending} />
+        <Cards title="Completed" value={completed} /> */}
       </div>
 
       <div className="max-w-5xl mx-auto px-2 sm:px-4">
