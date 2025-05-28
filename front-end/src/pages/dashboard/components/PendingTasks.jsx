@@ -139,7 +139,7 @@ export default function PendingTasks() {
         />
       )}
 
-      <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-start p-6">
+      <div className="max-w-5xl mx-auto flex flex-wrap gap-4 justify-center sm:justify-start py-6 px-2 sm:px-4">
         <Cards title="Pending" value={pendingTarefasLength} />
       </div>
       <div className="max-w-5xl mx-auto px-4">

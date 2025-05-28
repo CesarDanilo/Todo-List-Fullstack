@@ -44,12 +44,21 @@ module.exports = {
     },
     logging: process.env.NODE_ENV === 'production' ? false : console.log
   },
+  // development: {
+  //   username: process.env.DB_USER || 'postgres',
+  //   password: process.env.DB_PASSWORD || null,
+  //   database: process.env.DB_NAME || 'todo_app_dev',
+  //   host: process.env.DB_HOST || 'localhost',
+  //   port: parseInt(process.env.DB_PORT || '5432', 10),
+  //   dialect: 'postgres',
+  //   logging: console.log
+  // },
   development: {
-    username: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || null,
-    database: process.env.DB_NAME || 'todo_app_dev',
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432', 10),
+    username: 'postgres',
+    password: "root",
+    database: 'tododatabase',
+    host: '127.0.0.1',
+    port: 5432,
     dialect: 'postgres',
     logging: console.log
   },
