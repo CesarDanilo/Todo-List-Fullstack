@@ -69,18 +69,5 @@
 - Identificação segura de usuário via token  
 - Armazenamento seguro no frontend  
 
----
 
-## 📦 Endpoints REST
-
-| Método | Rota             | Descrição            |
-|--------|------------------|----------------------|
-| POST   | `/auth/register` | Cadastro de usuário  |
-| POST   | `/auth/login`    | Login do usuário     |
-| GET    | `/tarefas`       | Listar tarefas       |
-| POST   | `/tarefas`       | Criar nova tarefa    |
-| PUT    | `/tarefas/:id`   | Atualizar tarefa     |
-| DELETE | `/tarefas/:id`   | Mover para histórico |
-
----
 
