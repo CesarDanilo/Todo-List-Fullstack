@@ -2,7 +2,7 @@
   <img src="https://github.com/user-attachments/assets/f88bbf98-0508-40ae-91c6-533e4ccc314a" alt="Todo List Logo" width="150" />
 </p>
 
-<h2 align="center">Lista de Tarefas</h2>
+<h2 align="center">Lista de Tarefas</h2> 
 
 <p align="center">
   Aplicação fullstack com autenticação JWT, histórico de exclusão e interface responsiva.<br />
@@ -10,6 +10,8 @@
 </p>
 
 ---
+
+### ⚠ Banco de dados offline
 
 ## 🖥️ Interface
 <table align="center">
